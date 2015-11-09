@@ -8,4 +8,8 @@
     <string name="hint_inputPassword">请输入密码</string>
     <string name="btnName_login">登录</string>
     <string name="btnName_regist">注册新用户</string>
+    <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="hint_inputPhoneNumb">请输入手机号</string>
+    <string name="hint_inputMsgCode">请输入短信验证码</string>
 </resources>
