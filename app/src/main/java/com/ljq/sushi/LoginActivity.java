@@ -17,16 +17,17 @@ public class LoginActivity extends ActionBarActivity {
     private TextInputLayout usernameWrapper = null;
     private TextInputLayout passwordWrapper = null;
     private Button loginBtn = null;
-    private Button registBtn=null;
+    private Button registBtn = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameWrapper=(TextInputLayout)findViewById(R.id.usernameWrapper);
-        passwordWrapper=(TextInputLayout)findViewById(R.id.passwordWrapper);
-        loginBtn=(Button)findViewById(R.id.btn_login);
-        registBtn= (Button) findViewById(R.id.btn_regist);
+        usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
+        passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
+        loginBtn = (Button) findViewById(R.id.btn_login);
+        registBtn = (Button) findViewById(R.id.btn_regist);
 
         usernameWrapper.setHint("请输入帐号(adm)");
         passwordWrapper.setHint("请输入密码(adm)");
@@ -61,9 +62,8 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
-
-    public void doLogin(){
-        Toast.makeText(this,"登录成功",Toast.LENGTH_SHORT).show();
+    public void doLogin() {
+        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
 
     }
 }

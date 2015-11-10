@@ -1,7 +1,5 @@
 package com.ljq.sushi;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,10 +13,7 @@ public class RegisterActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setTitle("注册");
         setContentView(R.layout.activity_register);
-        //ActionBar actionBar=getActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("注册");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -32,7 +27,7 @@ public class RegisterActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 Utilities.hideKeyboard(RegisterActivity.this);
