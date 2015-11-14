@@ -1,10 +1,11 @@
-package com.ljq.sushi;
+package com.ljq.sushi.Activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ljq.sushi.R;
 import com.ljq.sushi.Util.Utilities;
 
 
