@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.ljq.sushi.R;
 import com.ljq.sushi.Util.Utilities;
+//import com.ljq.sushi.Util.Utilities;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -35,7 +36,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //hideKeyboard();
-                Utilities.hideKeyboard(LoginActivity.this);
+                //Utilities.hideKeyboard(LoginActivity.this);
 
                 String username = usernameWrapper.getEditText().getText().toString();
                 String password = passwordWrapper.getEditText().getText().toString();
