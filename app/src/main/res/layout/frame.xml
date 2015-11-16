@@ -29,10 +29,12 @@
             android:layout_marginTop="2.0dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@mipmap/tab_lhc_pressed"
+            android:drawableTop="@drawable/tab_selector_lhc"
+            android:checked="true"
             android:gravity="center"
             android:padding="2.0dp"
-            android:text="莲花池" />
+            android:text="莲花池"
+            android:textColor="@drawable/tab_selector_txt_color"/>
 
         <RadioButton
             android:id="@+id/same_city"
@@ -41,10 +43,11 @@
             android:layout_marginTop="2.0dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@mipmap/tab_city_normal"
+            android:drawableTop="@drawable/tab_selector_city"
             android:gravity="center"
             android:padding="2.0dp"
-            android:text="同城" />
+            android:text="同城"
+            android:textColor="@drawable/tab_selector_txt_color"/>
 
         <RadioButton
             android:id="@+id/lian_hua_bai_ke"
@@ -53,10 +56,11 @@
             android:layout_marginTop="2.0dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@mipmap/tab_baike_normal"
+            android:drawableTop="@drawable/tab_selector_baike"
             android:gravity="center"
             android:padding="2.0dp"
-            android:text="莲花百科" />
+            android:text="莲花百科"
+            android:textColor="@drawable/tab_selector_txt_color"/>
 
         <RadioButton
             android:id="@+id/my"
@@ -65,10 +69,11 @@
             android:layout_marginTop="2.0dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@mipmap/tab_me_normal"
+            android:drawableTop="@drawable/tab_selector_me"
             android:gravity="center"
             android:padding="2.0dp"
-            android:text="我" />
+            android:text="我"
+            android:textColor="@drawable/tab_selector_txt_color"/>
     </RadioGroup>
 
         <android.support.v4.view.ViewPager

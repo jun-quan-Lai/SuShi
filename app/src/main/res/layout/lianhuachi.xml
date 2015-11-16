@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:orientation="vertical">
 
             <TextView
@@ -34,42 +34,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
                 <TableRow android:layout_weight="0.5">
 
-                    <ImageView
-                        android:id="@+id/imgbtn1"
-                        android:layout_width="wrap_content"
+                    <com.ljq.sushi.UI.MyImageButton
+                        android:id="@+id/id_img_health"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:src="@mipmap/ic_launcher" />
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:src="@mipmap/img_health"
+                        android:text="健康" />
 
-                    <ImageView
-                        android:id="@+id/imgbtn2"
-                        android:layout_width="wrap_content"
+                    <com.ljq.sushi.UI.MyImageButton
+                        android:id="@+id/id_img_public"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/imgbtn1"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:src="@mipmap/ic_launcher" />
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:src="@mipmap/img_public"
+                        android:text="公益" />
                 </TableRow>
 
                 <TableRow android:layout_weight="0.5">
 
-                    <ImageView
-                        android:id="@+id/imgbtn3"
-                        android:layout_width="wrap_content"
+                    <com.ljq.sushi.UI.MyImageButton
+                        android:id="@+id/id_img_woman"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/imgbtn1"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:src="@mipmap/ic_launcher" />
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:src="@mipmap/img_woman"
+                        android:text="素女" />
 
-                    <ImageView
-                        android:id="@+id/imgbtn4"
-                        android:layout_width="wrap_content"
+                    <com.ljq.sushi.UI.MyImageButton
+                        android:id="@+id/id_img_star"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/imgbtn2"
-                        android:layout_toRightOf="@id/imgbtn3"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
-                        android:src="@mipmap/ic_launcher" />
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:src="@mipmap/img_star"
+                        android:text="莲花之星" />
                 </TableRow>
 
             </TableLayout>
@@ -84,7 +97,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
+            android:layout_weight="0.5"
             android:orientation="vertical">
 
             <TextView
@@ -100,37 +113,39 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imgbtn5"
+                <com.ljq.sushi.UI.MyImageButton
+                    android:id="@+id/id_img_kitchen"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@color/bg1"
-                    android:src="@mipmap/ic_launcher" />
+                    android:gravity="center"
+                    android:src="@mipmap/img_kitchen"
+                    android:text="莲花厨房" />
 
-                <ImageButton
-                    android:id="@+id/imgbtn6"
+                <com.ljq.sushi.UI.MyImageButton
+                    android:id="@+id/id_img_map"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_toRightOf="@+id/imgbtn5"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
-
                     android:background="@color/bg1"
+                    android:gravity="center"
+                    android:src="@mipmap/img_map"
+                    android:text="美食地图" />
 
-                    android:src="@mipmap/ic_launcher" />
-
-                <ImageButton
-                    android:id="@+id/imgbtn7"
+                <com.ljq.sushi.UI.MyImageButton
+                    android:id="@+id/id_ima_kuaidi"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_toRightOf="@+id/imgbtn6"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@color/bg1"
-
-                    android:src="@mipmap/ic_launcher" />
+                    android:button="@null"
+                    android:gravity="center"
+                    android:src="@mipmap/img_kuaidi"
+                    android:text="同城快递" />
             </LinearLayout>
 
         </LinearLayout>

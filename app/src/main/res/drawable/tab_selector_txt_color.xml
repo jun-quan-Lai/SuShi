@@ -3,7 +3,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="true" android:color="#40AD81"/>
-    <item android:state_checked="false" android:color="#9E9E9E"/>
-    <item android:color="@android:color/darker_gray"/>
+    <item android:color="#9E9E9E"/>
 
 </selector>
