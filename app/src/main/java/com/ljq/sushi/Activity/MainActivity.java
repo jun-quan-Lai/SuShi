@@ -38,18 +38,26 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.frame);
+        initView();
         setViewPager();
 
         addListenerForvPager();
         setListenerForRadioGroup();
     }
 
+    private void initView() {
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        lianHuaChiRBtn = (RadioButton) findViewById(R.id.lian_hua_chi);
+        sameCityRBtn = (RadioButton) findViewById(R.id.same_city);
+        baiKeRBtn = (RadioButton) findViewById(R.id.lian_hua_bai_ke);
+        meRBtn = (RadioButton) findViewById(R.id.my);
+        vPager = (ViewPager) findViewById(R.id.vp);
+    }
+
     //配置ViewPager,实现滑动功能
     private void setViewPager() {
-        getSupportActionBar().hide();//隐藏标题栏
-
-        vPager = (ViewPager) findViewById(R.id.vp);
         fList = new ArrayList<>();
         fList.add(new LianHuaChiFrag());
         fList.add(new SameCityFrag());
@@ -97,25 +105,26 @@ public class MainActivity extends ActionBarActivity {
 
     //为主页4个按钮设置监听器，实现按按钮切换fragment的功能
     private void setListenerForRadioGroup() {
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-        lianHuaChiRBtn = (RadioButton) findViewById(R.id.lian_hua_chi);
-        sameCityRBtn = (RadioButton) findViewById(R.id.same_city);
-        baiKeRBtn = (RadioButton) findViewById(R.id.lian_hua_bai_ke);
-        meRBtn = (RadioButton) findViewById(R.id.my);
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                //此处使用switch语句时出现问题，有空再解决
-                if (lianHuaChiRBtn.getId() == checkedId) {
+                switch (checkedId){
+                    case R.id.lian_hua_chi :
                     vPager.setCurrentItem(LIAN_HUA_CHI);
-                } else if (sameCityRBtn.getId() == checkedId) {
-                    vPager.setCurrentItem(SAME_CITY);
-                } else if (baiKeRBtn.getId() == checkedId) {
-                    vPager.setCurrentItem(LIAN_HUA_BAI_KE);
-                } else if (meRBtn.getId() == checkedId) {
-                    vPager.setCurrentItem(MY);
+                        break;
+                    case R.id.same_city:
+                        vPager.setCurrentItem(SAME_CITY);
+                        break;
+                    case R.id.lian_hua_bai_ke:
+                        vPager.setCurrentItem(LIAN_HUA_BAI_KE);
+                        break;
+                    case R.id.my:
+                        vPager.setCurrentItem(MY);
+                        break;
+                    default:break;
+
                 }
             }
         });
