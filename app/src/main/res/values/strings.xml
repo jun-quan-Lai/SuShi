@@ -13,4 +13,18 @@
     <string name="hint_inputPhoneNumb">请输入手机号</string>
     <string name="hint_inputMsgCode">请输入短信验证码</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_page1_text">您知道食素如何维持身心健康平衡吗？\n
+    Do you know how to keep healthy and  pleasant as a vegan?</string>
+    <string name="navigation_page2_text">您知道如何通过简单的方法做出美味营养
+    的家常素食吗？\n Do you know how to prepare a simple and nice vegan meal
+    for your family?</string>
+    <string name="navigation_page3_text">您知道食素一天能拯救多少生命吗？\n
+    Do you know how many lives you can save for one vegan day?</string>
+    <string name="navigation_page4_text">您想找到更多食素的朋友一起交流吗？\n
+    Do you want to make more vegan friends?</string>
+    <string name="navigation_page5_text">莲花素社，素食健康、美食、公益交流
+    平台，在此真诚 召唤全球素食者回归!\n Lotusite,a vegan lifestyle platform for
+    health,food and public welfare,sincerely call together all the vegans now!</string>
+
 </resources>

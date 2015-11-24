@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 
 import com.ljq.sushi.Fragment.FragmentAdapter;
 import com.ljq.sushi.Fragment.LianHuaBaiKeFrag;
@@ -21,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * 实现主界面框架
+ */
 public class MainActivity extends ActionBarActivity {
 
     private ViewPager vPager;
@@ -39,11 +41,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.frame);
+        setContentView(R.layout.activity_frame);
         initView();
         setViewPager();
 
-        addListenerForvPager();
+        addListenerForVPager();
         setListenerForRadioGroup();
     }
 
@@ -68,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
         vPager.setAdapter(adapter);
     }
 
-    private void addListenerForvPager() {
+    private void addListenerForVPager() {
         vPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -77,7 +79,6 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onPageSelected(int position) {
-                resetBtn();
                 switch (position) {
                     case LIAN_HUA_CHI:
                         lianHuaChiRBtn.setChecked(true);
@@ -105,14 +106,12 @@ public class MainActivity extends ActionBarActivity {
 
     //为主页4个按钮设置监听器，实现按按钮切换fragment的功能
     private void setListenerForRadioGroup() {
-
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.lian_hua_chi :
-                    vPager.setCurrentItem(LIAN_HUA_CHI);
+                switch (checkedId) {
+                    case R.id.lian_hua_chi:
+                        vPager.setCurrentItem(LIAN_HUA_CHI);
                         break;
                     case R.id.same_city:
                         vPager.setCurrentItem(SAME_CITY);
@@ -123,19 +122,12 @@ public class MainActivity extends ActionBarActivity {
                     case R.id.my:
                         vPager.setCurrentItem(MY);
                         break;
-                    default:break;
+                    default:
+                        break;
 
                 }
             }
         });
-    }
-
-    //设置button的图片为normal状态
-    private void resetBtn() {
-        lianHuaChiRBtn.setChecked(false);
-        sameCityRBtn.setChecked(false);
-        baiKeRBtn.setChecked(false);
-        meRBtn.setChecked(false);
     }
 
 }
