@@ -13,7 +13,6 @@ import com.ljq.sushi.Fragment.LianHuaBaiKeFrag;
 import com.ljq.sushi.Fragment.LianHuaChiFrag;
 import com.ljq.sushi.Fragment.MyFrag;
 import com.ljq.sushi.Fragment.SameCityFrag;
-
 import com.ljq.sushi.R;
 
 import java.util.ArrayList;

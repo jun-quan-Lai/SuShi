@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.ljq.sushi.R;
@@ -105,6 +104,7 @@ public class NavigationActivity extends ActionBarActivity {
                         R.mipmap.page_indicator_unfocused));
             // 将imageviews添加到小圆点视图组
             pointGroup.addView(pointImgViews[i]);
+
         }
     }
 
@@ -138,7 +138,7 @@ public class NavigationActivity extends ActionBarActivity {
 
     //点击button后调用，跳转到主界面，勿忘设置参数
     public void shipToFrame(View v){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         this.finish();
     }
