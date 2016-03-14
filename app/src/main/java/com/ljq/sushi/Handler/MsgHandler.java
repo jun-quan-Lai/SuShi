@@ -31,6 +31,6 @@ public class MsgHandler extends Handler {
     }
 
     public void showInfo(String info){
-        Toast.makeText(activity.getApplicationContext(),info,Toast.LENGTH_LONG).show();
+        Toast.makeText(activity.getApplicationContext(),info,Toast.LENGTH_SHORT).show();
     }
 }
