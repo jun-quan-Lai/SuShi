@@ -1,6 +1,7 @@
 package com.ljq.sushi.Activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Message;
@@ -17,17 +18,17 @@ import android.widget.CompoundButton;
 import java.util.HashMap;
 
 import com.ljq.sushi.Handler.MsgHandler;
-import com.ljq.sushi.HttpUtil.NativeHttpUtil;
 import com.ljq.sushi.R;
+import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 
-public class LoginActivity extends ActionBarActivity implements View.OnClickListener{
+public class LoginActivity extends Activity implements View.OnClickListener{
     private Handler handler;
     private Message msg;
 
     private String username;
     private String password;
 
-    private String httpResult="";
+    private String httpResult=null;
     private final String loginUrl = "http://114.215.99.203/sushi/login.php";
     private final String registUrl="http://114.215.99.203/sushi/regist.php";
 
@@ -114,7 +115,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
      * @param userName
      * @param passWord
      */
-    private void doLogin(String userName, String passWord) {
+    public void doLogin(String userName, String passWord) {
 
         username = usernameWrapper.getEditText().getText().toString().trim();
         password = passwordWrapper.getEditText().getText().toString().trim();
@@ -126,15 +127,19 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             usernameWrapper.setErrorEnabled(false);
             passwordWrapper.setErrorEnabled(false);
 
-            final HashMap<String, String> params = new HashMap<String, String>();
+            final HashMap<String, String> params = new HashMap();
             params.put("username", userName);
             params.put("userpwd", passWord);
-
+            final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
             new Thread() {
                 public void run() {
-                    httpResult = NativeHttpUtil.post(loginUrl, params);
+                    try{
+                        httpResult = userservice.userLogin(loginUrl, params);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     if (!TextUtils.isEmpty(httpResult)) {
-                        //successLogin=true;
                         msg = handler.obtainMessage();
                         msg.arg1 = 1;
                         handler.sendMessage(msg);

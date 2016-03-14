@@ -1,16 +1,18 @@
 package com.ljq.sushi.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Message;
 import android.os.Handler;
+import android.text.TextUtils;
 
+import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
+import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 
-
-
-
+import java.util.HashMap;
 
 
 /**
@@ -18,41 +20,64 @@ import com.ljq.sushi.R;
  * 通过使用SharedPreference、Handler技术，实现显示welcome界面1.5秒
  * 与选择是否显示导航动画
  */
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends Activity {
 
+    private Handler handler;
+    private Message msg;
     boolean firstFlag; //是否首次安装flag
-
+    private final String loginUrl = "http://114.215.99.203/sushi/login.php";
+    private String userName;
+    private String passWord;  //当用户选择了自动登录，用于填充账号密码
+    private String httpResult="";
+    final Intent intent = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        handler = new MsgHandler(this);
         shipToNavigationOrFrame();
     }
 
     //判断且实现应跳转导航动画还是主界面
     private void shipToNavigationOrFrame(){
-        if(getSupportActionBar()!=null)
-            getSupportActionBar().hide();
 
-
-        SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
+        final SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
         firstFlag = share.getBoolean("first", true);
 
-        final Intent intent = new Intent();
         if (firstFlag){
             intent.setClass(this,NavigationActivity.class);
             SharedPreferences.Editor editor = share.edit();
             editor.putBoolean("first", false);
             editor.apply(); //apply与commit作用相同，虽没返回值，但效率更高
         }else {
+                //判断用户是否选择自动登录
+            if(share.getBoolean("autoLogin",false)) {
+                userName = share.getString("username", " ");
+                passWord = share.getString("password", " ");
+                final HashMap<String, String> params = new HashMap();
+                params.put("username", userName);
+                params.put("userpwd", passWord);
+                final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
+                new Thread() {
+                    public void run() {
+                        try {
+                            httpResult = userservice.userLogin(loginUrl, params);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-            if(share.getBoolean("autoLogin",false)){
-                //自动登录代码，没实现
-                intent.setClass(this, MainActivity.class);
+                        if (!TextUtils.isEmpty(httpResult)) {
+                            intent.setClass(WelcomeActivity.this, MainActivity.class);
+                        } else {
+                            msg = handler.obtainMessage();
+                            msg.arg1 = 2;
+                            handler.sendMessage(msg);
+                        }
+                    }
+                }.start();
             }
-            else
-            {
+            else {
                 intent.setClass(this, LoginActivity.class);
             }
 
@@ -63,6 +88,8 @@ public class WelcomeActivity extends ActionBarActivity {
                 startActivity(intent);
                 WelcomeActivity.this.finish();
             }
-        },1500);
+        }, 1500);
     }
+
+
 }
