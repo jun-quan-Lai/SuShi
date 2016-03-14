@@ -73,6 +73,7 @@ public class WelcomeActivity extends Activity {
                             msg = handler.obtainMessage();
                             msg.arg1 = 2;
                             handler.sendMessage(msg);
+                            intent.setClass(WelcomeActivity.this, LoginActivity.class);
                         }
                     }
                 }.start();
