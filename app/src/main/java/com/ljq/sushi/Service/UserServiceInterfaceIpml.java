@@ -1,8 +1,8 @@
 package com.ljq.sushi.Service;
 
-
 import com.ljq.sushi.HttpUtil.NativeHttpUtil;
 
+import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
@@ -11,13 +11,19 @@ import java.util.HashMap;
 public class UserServiceInterfaceIpml implements UserServiceInterface {
 
     @Override
-    public String userLogin(String url,HashMap<String,String> params) throws Exception {
+    public int userLogin(HashMap<String,String> params) throws Exception {
 
-        String result = NativeHttpUtil.post(url, params);
-        if(!result.isEmpty()){
-            return result;
-        }
-        else return null;
+        String jsonString = NativeHttpUtil.post(loginUrl, params);
+        JSONObject jo = new JSONObject(jsonString);
+        int  code = jo.getInt("code");
+        return code;
+    }
 
+    @Override
+    public int userRegist(HashMap<String, String> params) throws Exception {
+        String jsonString = NativeHttpUtil.post(registUrl, params);
+        JSONObject jo = new JSONObject(jsonString);
+        int  code = jo.getInt("code");
+        return code;
     }
 }

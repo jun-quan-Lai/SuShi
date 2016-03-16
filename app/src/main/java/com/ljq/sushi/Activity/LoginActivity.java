@@ -4,33 +4,27 @@ package com.ljq.sushi.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Message;
-import android.os.Handler;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.os.Handler;
+import android.os.Message;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import java.util.HashMap;
-
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 
+import java.util.HashMap;
+
 public class LoginActivity extends Activity implements View.OnClickListener{
     private Handler handler;
     private Message msg;
-
     private String username;
     private String password;
-
-    private String httpResult=null;
-    private final String loginUrl = "http://114.215.99.203/sushi/login.php";
-    private final String registUrl="http://114.215.99.203/sushi/regist.php";
+    private  int httpResultcode;
 
     private TextInputLayout usernameWrapper = null;
     private TextInputLayout passwordWrapper = null;
@@ -58,6 +52,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         autoLoginChBx.setOnCheckedChangeListener(checkboxlister);
 
         loginBtn.setOnClickListener(this);
+        registBtn.setOnClickListener(this);
 
         SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
         if (share.getBoolean("rememberPsw", false)) {
@@ -71,18 +66,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         }
     }
 
-
     private CheckBox.OnCheckedChangeListener checkboxlister = new CheckBox.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
             SharedPreferences share1 = getSharedPreferences("flag", MODE_PRIVATE);
             SharedPreferences.Editor editor = share1.edit();
             if (rememberPswChBx.isChecked()) {
                 editor.putString("username", usernameWrapper.getEditText().getText().toString().trim());
                 editor.putString("password", passwordWrapper.getEditText().getText().toString().trim());
                 editor.putBoolean("rememberPsw",true);
-
             }
             if(autoLoginChBx.isChecked()){
                 editor.putBoolean("autoLogin", true);
@@ -94,11 +86,12 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         }
     };
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login:
+                username = usernameWrapper.getEditText().getText().toString().trim();
+                password = passwordWrapper.getEditText().getText().toString().trim();
                 doLogin(username,password);
                 break;
             case R.id.btn_regist:
@@ -116,13 +109,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
      * @param passWord
      */
     public void doLogin(String userName, String passWord) {
-
-        username = usernameWrapper.getEditText().getText().toString().trim();
-        password = passwordWrapper.getEditText().getText().toString().trim();
-        if (username.equals(" "))
+        if (username.equals(" ")){
             usernameWrapper.setError("账号不能为空");
-        if (password.equals(" "))
+            passwordWrapper.setError(null);
+        }
+        if (password.equals(" ")){
             passwordWrapper.setError("密码不能为空");
+            usernameWrapper.setError(null);
+        }
         else {
             usernameWrapper.setErrorEnabled(false);
             passwordWrapper.setErrorEnabled(false);
@@ -134,25 +128,23 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             new Thread() {
                 public void run() {
                     try{
-                        httpResult = userservice.userLogin(loginUrl, params);
+                        httpResultcode = userservice.userLogin(params);
+                        if (httpResultcode==200) {
+                            msg = handler.obtainMessage();
+                            msg.arg1 = 1;
+                            handler.sendMessage(msg);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            msg = handler.obtainMessage();
+                            msg.arg1 = 2;
+                            handler.sendMessage(msg);
+                        }
                     }catch (Exception e){
                         e.printStackTrace();
-                    }
-
-                    if (!TextUtils.isEmpty(httpResult)) {
-                        msg = handler.obtainMessage();
-                        msg.arg1 = 1;
-                        handler.sendMessage(msg);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        msg = handler.obtainMessage();
-                        msg.arg1 = 2;
-                        handler.sendMessage(msg);
                     }
                 }
             }.start();
         }
     }
-
 }

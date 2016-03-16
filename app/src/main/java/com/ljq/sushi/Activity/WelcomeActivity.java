@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler;
-import android.text.TextUtils;
+import android.os.Message;
 
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 
 import java.util.HashMap;
-
 
 /**
  * Created by jc on 2015/11/20.
@@ -25,10 +23,9 @@ public class WelcomeActivity extends Activity {
     private Handler handler;
     private Message msg;
     boolean firstFlag; //是否首次安装flag
-    private final String loginUrl = "http://114.215.99.203/sushi/login.php";
     private String userName;
     private String passWord;  //当用户选择了自动登录，用于填充账号密码
-    private String httpResult="";
+    private int httpResultcode;
     final Intent intent = new Intent();
 
     @Override
@@ -44,14 +41,12 @@ public class WelcomeActivity extends Activity {
 
         final SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
         firstFlag = share.getBoolean("first", true);
-
         if (firstFlag){
             intent.setClass(this,NavigationActivity.class);
             SharedPreferences.Editor editor = share.edit();
             editor.putBoolean("first", false);
             editor.apply(); //apply与commit作用相同，虽没返回值，但效率更高
-        }else {
-                //判断用户是否选择自动登录
+        }else {//判断用户是否选择自动登录
             if(share.getBoolean("autoLogin",false)) {
                 userName = share.getString("username", " ");
                 passWord = share.getString("password", " ");
@@ -62,12 +57,11 @@ public class WelcomeActivity extends Activity {
                 new Thread() {
                     public void run() {
                         try {
-                            httpResult = userservice.userLogin(loginUrl, params);
+                            httpResultcode = userservice.userLogin(params);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-                        if (!TextUtils.isEmpty(httpResult)) {
+                        if (httpResultcode==200) {
                             intent.setClass(WelcomeActivity.this, MainActivity.class);
                         } else {
                             msg = handler.obtainMessage();
@@ -81,8 +75,8 @@ public class WelcomeActivity extends Activity {
             else {
                 intent.setClass(this, LoginActivity.class);
             }
-
         }
+
         new Handler().postDelayed(new Runnable() { //延时1.5秒
             @Override
             public void run() {
@@ -91,6 +85,4 @@ public class WelcomeActivity extends Activity {
             }
         }, 1500);
     }
-
-
 }

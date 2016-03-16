@@ -8,12 +8,12 @@ import android.widget.Toast;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by Administrator on 2016/3/12.
+ *处理用户需要改变UI线程的消息，避免在用户线程中改变UI线程内容
  */
 public class MsgHandler extends Handler {
     private Activity activity;
     public MsgHandler(Activity activity){
-        this.activity = new WeakReference<Activity>(activity).get();//使用弱引用避免Handler内存泄漏
+        this.activity = new WeakReference<>(activity).get();//使用弱引用避免Handler内存泄漏
     }
 
     @Override
@@ -24,6 +24,12 @@ public class MsgHandler extends Handler {
                 break;
             case 2:
                 showInfo("用户名或密码错误，请重新输入");
+                break;
+            case 3:
+                showInfo("注册成功");
+                break;
+            case 4:
+                showInfo("该手机号已经注册");
                 break;
             default:
                 break;
