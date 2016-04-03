@@ -3,7 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    
+
     <string name="hint_inputAccount">请输入帐号</string>
     <string name="hint_inputPassword">请输入密码</string>
     <string name="btnName_login">登录</string>
@@ -26,5 +26,8 @@
     <string name="navigation_page5_text">莲花素社，素食健康、美食、公益交流
     平台，在此真诚 召唤全球素食者回归!\n Lotusite,a vegan lifestyle platform for
     health,food and public welfare,sincerely call together all the vegans now!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/baike_radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2.0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="2.0dp"
+                android:text="推荐"
+                android:textSize="20dp"
+                android:textColor="@drawable/tab_selector_txt_color"/>
+
+            <RadioButton
+                android:id="@+id/tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2.0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="2.0dp"
+                android:text="素食"
+                android:textSize="20dp"
+                android:textColor="@drawable/tab_selector_txt_color"/>
+
+            <RadioButton
+                android:id="@+id/tab3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2.0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="2.0dp"
+                android:text="健康"
+                android:textSize="20dp"
+                android:textColor="@drawable/tab_selector_txt_color"/>
+
+            <RadioButton
+                android:id="@+id/tab4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2.0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="2.0dp"
+                android:text="疾病"
+                android:textSize="20dp"
+                android:textColor="@drawable/tab_selector_txt_color"/>
+
+            <RadioButton
+                android:id="@+id/tab5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2.0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="2.0dp"
+                android:text="中医"
+                android:textSize="20dp"
+                android:textColor="@drawable/tab_selector_txt_color"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/boundary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/baike_radioGroup"
+            android:background="#B2B2B2" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/baike_vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
+    <FrameLayout
+        android:id="@+id/baikefrg_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
+</LinearLayout>

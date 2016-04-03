@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuShi.iml" filepath="$PROJECT_DIR$/SuShi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pulltorefreashlibrary/pulltorefreashlibrary.iml" filepath="$PROJECT_DIR$/pulltorefreashlibrary/pulltorefreashlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spider/spider.iml" filepath="$PROJECT_DIR$/spider/spider.iml" />
     </modules>
   </component>
 </project>

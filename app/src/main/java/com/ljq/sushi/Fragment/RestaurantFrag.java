@@ -14,16 +14,14 @@ import java.lang.reflect.Field;
 /**
  * Created by Administrator on 2015/11/8.
  */
-public class MyFrag extends Fragment {
-
-    public MyFrag(){
-
+public class RestaurantFrag extends Fragment {
+    public RestaurantFrag() {
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_me, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.frag_restaurant,container,false);
     }
 
     @Override
@@ -41,4 +39,5 @@ public class MyFrag extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -1,6 +1,7 @@
-package com.ljq.sushi.Fragment;
+package com.ljq.sushi.Adapter;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
@@ -11,8 +12,7 @@ import java.util.List;
 public class FragmentAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fList;
-
-    public FragmentAdapter(android.support.v4.app.FragmentManager fm, List<Fragment> fList) {
+    public FragmentAdapter(FragmentManager fm, List<Fragment> fList) {
         super(fm);
         this.fList = fList;
     }
