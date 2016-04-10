@@ -1,11 +1,10 @@
 package com.ljq.sushi.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import java.util.List;
  * 通过使用ViewPager技术实现多个页面滑动切换
  * 且实现动态确定及添加导航圆点，使程序更具弹性
  */
-public class NavigationActivity extends ActionBarActivity {
+public class NavigationActivity extends Activity {
 
     private ViewPager vPager;
     private List<View> vList; //装载各页面的视图
@@ -41,22 +40,18 @@ public class NavigationActivity extends ActionBarActivity {
     private void initView(){
         vPager = (ViewPager)findViewById(R.id.navigation_vp);
         pointGroup = (ViewGroup)findViewById(R.id.viewPoints);
-
-        if(getSupportActionBar() !=null )
-            getSupportActionBar().hide();
     }
 
     //实现基本滑动切换界面
     private void setViewPager(){
         LayoutInflater inflater = getLayoutInflater();
-        vList = new ArrayList<View>();
+        vList = new ArrayList<>();
 
         vList.add(inflater.inflate(R.layout.navigation_page1,null));
         vList.add(inflater.inflate(R.layout.navigation_page2,null));
         vList.add(inflater.inflate(R.layout.navigation_page3,null));
         vList.add(inflater.inflate(R.layout.navigation_page4,null));
         vList.add(inflater.inflate(R.layout.navigation_page5, null));
-        Log.e("Nav","1");
 
         PagerAdapter myAdapter = new PagerAdapter() {
             @Override

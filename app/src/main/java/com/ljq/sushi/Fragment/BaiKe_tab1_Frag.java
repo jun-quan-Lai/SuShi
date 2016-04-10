@@ -38,7 +38,7 @@ public class BaiKe_tab1_Frag extends Fragment {
 
     private PullToRefreshListView lv;
     private List<News> list;
-    private String HTTPURL = "http://litchiapi.jstv.com/api/GetFeeds?column=3&PageSize=20&pageIndex=1&val=100511D3BE5301280E0992C73A9DEC41";
+    private String HTTPURL = "http://114.215.99.203/app/Home/Baike/getArticles";
     ListAdapter adapter;
     Context context;
 
@@ -110,16 +110,13 @@ public class BaiKe_tab1_Frag extends Fragment {
             public void onResponse(Response response) throws IOException {
                 try {
                     JSONObject jo1 = new JSONObject(response.body().string());
-                    JSONObject jo2 = jo1.getJSONObject("paramz");
-                    JSONArray ja = jo2.getJSONArray("feeds");
+                    JSONArray ja = new JSONArray(jo1.getString("data"));
                     News news = null;
                     for (int i = 0; i < ja.length(); i++) {
-                        JSONObject data = ja.getJSONObject(i).getJSONObject(
-                                "data");
-                        String imageUrl = "http://litchiapi.jstv.com"
-                                + data.getString("cover");
-                        String title = data.getString("subject");
-                        String summary = data.getString("summary");
+                        JSONObject data = ja.getJSONObject(i);
+                        String imageUrl = data.getString("thumbnail");
+                        String title = data.getString("title");
+                        String summary = data.getString("ssumary");
                         news = new News(imageUrl, title, summary);
                         list.add(news);
                     }

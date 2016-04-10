@@ -27,7 +27,7 @@
                 android:padding="2.0dp"
                 android:text="推荐"
                 android:textSize="20dp"
-                android:textColor="@drawable/tab_selector_txt_color"/>
+                android:textColor="@drawable/tab_selector_txt_color_style2"/>
 
             <RadioButton
                 android:id="@+id/tab2"
@@ -40,7 +40,7 @@
                 android:padding="2.0dp"
                 android:text="素食"
                 android:textSize="20dp"
-                android:textColor="@drawable/tab_selector_txt_color"/>
+                android:textColor="@drawable/tab_selector_txt_color_style2"/>
 
             <RadioButton
                 android:id="@+id/tab3"
@@ -53,7 +53,7 @@
                 android:padding="2.0dp"
                 android:text="健康"
                 android:textSize="20dp"
-                android:textColor="@drawable/tab_selector_txt_color"/>
+                android:textColor="@drawable/tab_selector_txt_color_style2"/>
 
             <RadioButton
                 android:id="@+id/tab4"
@@ -66,7 +66,7 @@
                 android:padding="2.0dp"
                 android:text="疾病"
                 android:textSize="20dp"
-                android:textColor="@drawable/tab_selector_txt_color"/>
+                android:textColor="@drawable/tab_selector_txt_color_style2"/>
 
             <RadioButton
                 android:id="@+id/tab5"
@@ -79,7 +79,7 @@
                 android:padding="2.0dp"
                 android:text="中医"
                 android:textSize="20dp"
-                android:textColor="@drawable/tab_selector_txt_color"/>
+                android:textColor="@drawable/tab_selector_txt_color_style2"/>
         </RadioGroup>
 
         <TextView

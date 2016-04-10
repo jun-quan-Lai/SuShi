@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -122,20 +123,21 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             passwordWrapper.setErrorEnabled(false);
 
             final HashMap<String, String> params = new HashMap();
-            params.put("username", userName);
-            params.put("userpwd", passWord);
+            params.put("userName", userName);
+            params.put("userPwd", passWord);
             final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
             new Thread() {
                 public void run() {
                     try{
                         httpResultcode = userservice.userLogin(params);
-                        if (httpResultcode==200) {
+                        Log.d("code","code"+httpResultcode);
+                        if (httpResultcode==202) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 1;
                             handler.sendMessage(msg);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
-                        } else {
+                        } else if(httpResultcode==404){
                             msg = handler.obtainMessage();
                             msg.arg1 = 2;
                             handler.sendMessage(msg);

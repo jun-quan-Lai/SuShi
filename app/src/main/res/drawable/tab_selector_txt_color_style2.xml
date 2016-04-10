@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--切换底部导航栏使字体显示的颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true" android:color="#38CC90"/>
+    <item android:color="#000000"/>
+
+</selector>

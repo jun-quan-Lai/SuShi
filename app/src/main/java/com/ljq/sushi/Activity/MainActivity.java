@@ -1,24 +1,28 @@
 package com.ljq.sushi.Activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import com.ljq.sushi.Fragment.BaiKeFrag;
 import com.ljq.sushi.Fragment.MyFrag;
 import com.ljq.sushi.Fragment.RestaurantFrag;
 import com.ljq.sushi.R;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
 /**
  * 实现主界面框架
  */
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
 
     private FragmentManager mFrgmanager;
-
+    private Toolbar toolbar;
     private RadioGroup tabHost;  //主界面底部导航栏
     private BaiKeFrag baiKeFrag;
     private RestaurantFrag restaurantFrag;
@@ -35,12 +39,23 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //对Android4.4以上的版本做状态栏和Toolbar的沉浸（只支持4.4以上）
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            WindowManager.LayoutParams winParams = getWindow().getAttributes();
+            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+            winParams.flags |= bits;
+            getWindow().setAttributes(winParams);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.statusbar);
+        }
         mFrgmanager = getSupportFragmentManager();
         initView();
     }
 
     private void initView() {
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         tabHost = (RadioGroup) findViewById(R.id.main_radioGroup);
         tabHost.setOnCheckedChangeListener(this);
 

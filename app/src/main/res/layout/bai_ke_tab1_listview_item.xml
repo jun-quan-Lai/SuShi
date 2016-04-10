@@ -18,9 +18,10 @@
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/iv"
         android:gravity="center_vertical"
-        android:text="标题一"
+        android:text=""
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@android:color/black"
         />
     <TextView
         android:id="@+id/summary"
@@ -29,6 +30,7 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/iv"
-        android:text="内容一"
-        android:textSize="15sp"/>
+        android:text=""
+        android:textSize="15sp"
+        android:textColor="@android:color/darker_gray"/>
 </RelativeLayout>

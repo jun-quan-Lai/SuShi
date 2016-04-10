@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
@@ -51,17 +52,18 @@ public class WelcomeActivity extends Activity {
                 userName = share.getString("username", " ");
                 passWord = share.getString("password", " ");
                 final HashMap<String, String> params = new HashMap();
-                params.put("username", userName);
-                params.put("userpwd", passWord);
+                params.put("userName", userName);
+                params.put("userPwd", passWord);
                 final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
                 new Thread() {
                     public void run() {
                         try {
                             httpResultcode = userservice.userLogin(params);
+                            Log.d("code","code"+httpResultcode);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (httpResultcode==200) {
+                        if (httpResultcode==202) {
                             intent.setClass(WelcomeActivity.this, MainActivity.class);
                         } else {
                             msg = handler.obtainMessage();

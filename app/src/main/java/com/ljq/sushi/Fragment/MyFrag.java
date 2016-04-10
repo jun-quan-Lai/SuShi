@@ -27,6 +27,15 @@ public class MyFrag extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+
+
+
+    @Override
     public void onDetach() {
         super.onDetach();
         try {

@@ -7,16 +7,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.ljq.sushi.Activity.ContentActivity;
 import com.ljq.sushi.R;
 import com.sushi.news.spider.News;
@@ -25,12 +23,12 @@ import com.sushi.news.spider.NewsSpider;
 import java.util.ArrayList;
 
 
-public class BaiKe_tab2_Frag extends Fragment {
+public class BaiKe_tab2_Frag extends Fragment  {
 
-    private PullToRefreshListView lv;
+    RecyclerView mRecyclerView;
     private ArrayList<News> list;
     private String HTTPURL="http://ss.zgfj.cn/SSZX/";
-    private Myadapter adapter;
+    private MyRecyclerViewAdapter adapter;
 
     public BaiKe_tab2_Frag() {
         // Required empty public constructor
@@ -43,8 +41,21 @@ public class BaiKe_tab2_Frag extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    adapter = new Myadapter();
-                    lv.setAdapter(adapter);
+                    adapter = new MyRecyclerViewAdapter(list);
+                    adapter.setOnRecyclerViewListener(new MyRecyclerViewAdapter.OnRecyclerViewListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(getActivity(),ContentActivity.class);
+                            intent.putExtra("contentUrl",list.get(position).getUrl());
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public boolean onItemLongClick(int position) {
+                            return false;
+                        }
+                    });
+                    mRecyclerView.setAdapter(adapter);
                     break;
                 default:
                     break;
@@ -70,21 +81,8 @@ public class BaiKe_tab2_Frag extends Fragment {
         initdata();
     }
     private void initView() {
-        lv = (PullToRefreshListView) getView().findViewById(R.id.lv_bai_ke_tab2);
-        lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-
-            }
-        });
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(),ContentActivity.class);
-                intent.putExtra("contentUrl",list.get(position).getUrl());
-                startActivity(intent);
-            }
-        });
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.baike_tab2_recyler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
     private void initdata() {
 
@@ -94,47 +92,78 @@ public class BaiKe_tab2_Frag extends Fragment {
             list = spider.getNewList(HTTPURL);
             mHandler.obtainMessage(0).sendToTarget();
         }}.start();
-
-
     }
 
-    public class Myadapter extends BaseAdapter{
+
+    public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
+
+
+        public  interface OnRecyclerViewListener {
+            void onItemClick(int position);
+            boolean onItemLongClick(int position);
+        }
+        private OnRecyclerViewListener onRecyclerViewListener;
+
+        public void setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener){
+            this.onRecyclerViewListener = onRecyclerViewListener;
+        }
+
+        private ArrayList<News> list;
+        public MyRecyclerViewAdapter(ArrayList<News> list){
+            this.list = list;
+        }
 
         @Override
-        public int getCount() {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bai_ke_tab2_listview_item,null);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setLayoutParams(lp);
+            return new MyViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            MyViewHolder myholder = (MyViewHolder) holder;
+            myholder.position=position;
+            News news = list.get(position);
+            myholder.txtview.setText(news.getTitle());
+        }
+
+        @Override
+        public int getItemCount() {
             return list.size();
         }
 
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
+        class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+                View.OnLongClickListener{
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+            public TextView txtview;
+            public int position;
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final ViewHolder holder;
-            if (convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getActivity());
-                convertView = inflater.inflate(R.layout.bai_ke_tab2_listview_item, parent,false);
-                holder = new ViewHolder();
-                holder.txtview = (TextView) convertView.findViewById(R.id.bai_ke_tab2_list_title);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
+            public MyViewHolder(View itemView) {
+                super(itemView);
+                txtview = (TextView) itemView.findViewById(R.id.bai_ke_tab2_list_title);
+                txtview.setOnClickListener(this);
+                txtview.setOnLongClickListener(this);
+
             }
-            News news = list.get(position);
-            holder.txtview.setText(news.getTitle());
-            return convertView;
+
+            @Override
+            public void onClick(View v) {
+                if(null != onRecyclerViewListener){
+                    onRecyclerViewListener.onItemClick(position);
+                }
+            }
+
+            @Override
+            public boolean onLongClick(View v) {
+                if(null != onRecyclerViewListener){
+                    onRecyclerViewListener.onItemLongClick(position);
+                }
+                return false;
+            }
         }
-    }
 
-    public class ViewHolder{
-        TextView txtview;
     }
-
 }
+

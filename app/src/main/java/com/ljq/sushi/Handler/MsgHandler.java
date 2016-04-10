@@ -31,6 +31,9 @@ public class MsgHandler extends Handler {
             case 4:
                 showInfo("该手机号已经注册");
                 break;
+            case 5:
+                showInfo("注册失败，服务器错误");
+                break;
             default:
                 break;
         }

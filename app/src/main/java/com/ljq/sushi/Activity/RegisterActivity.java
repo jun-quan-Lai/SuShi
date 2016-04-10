@@ -77,22 +77,26 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
             passwordWrapper.setEnabled(false);
 
             final HashMap<String, String> params = new HashMap();
-            params.put("username", phoneNumber);
-            params.put("userpwd", password);
+            params.put("userName", phoneNumber);
+            params.put("userPwd", password);
             final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
             new Thread() {
                 public void run() {
                     try{
                         httpResultcode = userservice.userRegist(params);
-                        if (httpResultcode==200) {
+                        if (httpResultcode==201) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 3;
                             handler.sendMessage(msg);
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
-                        } else {
+                        } else if(httpResultcode==402) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 4;
+                            handler.sendMessage(msg);
+                        }else if(httpResultcode==403){
+                            msg = handler.obtainMessage();
+                            msg.arg1 = 5;
                             handler.sendMessage(msg);
                         }
                     }catch (Exception e){
