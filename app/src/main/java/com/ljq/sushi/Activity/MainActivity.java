@@ -4,11 +4,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
-import android.widget.RadioGroup;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ljq.sushi.Fragment.BaiKeFrag;
 import com.ljq.sushi.Fragment.MyFrag;
 import com.ljq.sushi.Fragment.RestaurantFrag;
@@ -19,11 +21,11 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 /**
  * 实现主界面框架
  */
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener{
 
     private FragmentManager mFrgmanager;
     private Toolbar toolbar;
-    private RadioGroup tabHost;  //主界面底部导航栏
+    BottomNavigationBar bottomNavigationBar; //主界面底部导航栏
     private BaiKeFrag baiKeFrag;
     private RestaurantFrag restaurantFrag;
     private MyFrag myFrag;
@@ -49,46 +51,59 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.statusbar);
         }
+
         mFrgmanager = getSupportFragmentManager();
         initView();
     }
-
     private void initView() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tabHost = (RadioGroup) findViewById(R.id.main_radioGroup);
-        tabHost.setOnCheckedChangeListener(this);
-
-        baiKeFrag = new BaiKeFrag();
+        bottomNavigationBar = (BottomNavigationBar)findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.bottom_baike,"百科"))
+                .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素食地图"))
+                .addItem(new BottomNavigationItem(R.mipmap.bottom_me,"我"))
+                .setActiveColor(R.color.green)
+                .setInActiveColor("#FFFFFF")
+                .setBarBackgroundColor("#ECECEC")
+                .initialise();
+        bottomNavigationBar.setTabSelectedListener(this);
+        setDefaultFragment();
+    }
+    private void setDefaultFragment() {
+        baiKeFrag = BaiKeFrag.newInstance();
         mFrgmanager.beginTransaction().add(R.id.main_container,baiKeFrag,"baike").commit();
         from = baiKeFrag;
     }
 
+
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId){
-            case R.id.bai_ke:
+    public void onTabSelected(int position) {
+
+        //开启事务
+        FragmentTransaction transaction = mFrgmanager.beginTransaction();
+        switch (position){
+            case 0:
                 if(baiKeFrag==null){
-                    baiKeFrag=new BaiKeFrag();
-                    mFrgmanager.beginTransaction().hide(from).add(R.id.main_container,baiKeFrag,"baike").commit();
+                    baiKeFrag=BaiKeFrag.newInstance();
+                    transaction.hide(from).add(R.id.main_container,baiKeFrag,"baike");
                     from = baiKeFrag;
                 }
 
                 else{
                     if(mFrgmanager.findFragmentByTag("baike")!=null){
-                        mFrgmanager.beginTransaction().hide(from).show(baiKeFrag).commit();
+                        transaction.hide(from).show(baiKeFrag);
                         from = baiKeFrag;
                     }
                     else
-                        mFrgmanager.beginTransaction().add(R.id.main_container,baiKeFrag,"baike").commit();
+                        transaction.add(R.id.main_container,baiKeFrag,"baike");
                 }
 
                 break;
-            case R.id.restaurant:
+            case 1:
                 if(restaurantFrag==null)
                 {
-                    restaurantFrag=new RestaurantFrag();
-                    mFrgmanager.beginTransaction().hide(from).add(R.id.main_container,restaurantFrag,"res").commit();
+                    restaurantFrag=RestaurantFrag.newInstance();
+                    transaction.hide(from).add(R.id.main_container,restaurantFrag,"res");
                     from = restaurantFrag;
                 }
 
@@ -96,35 +111,45 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 {
                     if(mFrgmanager.findFragmentByTag("res")!=null)
                     {
-                        mFrgmanager.beginTransaction().hide(from).show(restaurantFrag).commit();
+                        transaction.hide(from).show(restaurantFrag);
                         from = restaurantFrag;
                     }
 
                     else
-                        mFrgmanager.beginTransaction().add(R.id.main_container,restaurantFrag,"res").commit();
+                        transaction.add(R.id.main_container,restaurantFrag,"res");
                 }
                 break;
-            case R.id.me:
+            case 2:
                 if(myFrag==null){
-                    myFrag=new MyFrag();
-                    mFrgmanager.beginTransaction().hide(from).add(R.id.main_container,myFrag,"me").commit();
+                    myFrag= MyFrag.newInstance();
+                    transaction.hide(from).add(R.id.main_container,myFrag,"me");
                     from=myFrag;
                 }
                 else{
                     if(mFrgmanager.findFragmentByTag("me")!=null)
                     {
-                        mFrgmanager.beginTransaction().hide(from).show(myFrag).commit();
+                        transaction.hide(from).show(myFrag);
                         from=myFrag;
                     }
 
                     else
-                        mFrgmanager.beginTransaction().add(R.id.main_container,myFrag,"me").commit();
+                        transaction.add(R.id.main_container,myFrag,"me");
                 }
                 break;
             default:
                 break;
         }
+
+        transaction.commit();
     }
 
+    @Override
+    public void onTabUnselected(int position) {
 
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
+    }
 }

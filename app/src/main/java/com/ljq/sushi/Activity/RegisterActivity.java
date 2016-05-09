@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
@@ -84,17 +85,17 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
                 public void run() {
                     try{
                         httpResultcode = userservice.userRegist(params);
-                        if (httpResultcode==201) {
+                        if (httpResultcode== AppConstants.OK_REGISTER) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 3;
                             handler.sendMessage(msg);
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
-                        } else if(httpResultcode==402) {
+                        } else if(httpResultcode==AppConstants.ERROR_NAME_EXIST) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 4;
                             handler.sendMessage(msg);
-                        }else if(httpResultcode==403){
+                        }else if(httpResultcode==AppConstants.ERROR_SERVICE){
                             msg = handler.obtainMessage();
                             msg.arg1 = 5;
                             handler.sendMessage(msg);

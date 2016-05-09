@@ -1,21 +1,22 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/actionbar</item>
+        <item name="colorPrimaryDark">@color/statusbar</item>
+        <item name="colorAccent">#FF4081</item>
     </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="windowActionBar">false</item>
-        <!-- 使用 API Level 22 編譯的話，要拿掉前綴字 -->
-        <item name="windowNoTitle">true</item>
-        <!--Actionbar color-->
-        <item name="colorPrimary">@color/actionbar</item>
-        <!--Status bar color-->
-        <item name="colorPrimaryDark">@color/statusbar</item>
-        <!--window color-->
-        <item name="android:windowBackground">@color/window</item>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme">
+    </style>
+
+   <style name="TranslucentTheme" parent="BaseAppTheme">
+       <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
+   </style>
+
+    <style name="ColorTranslucentTheme" parent="BaseAppTheme">
+
     </style>
 
 </resources>

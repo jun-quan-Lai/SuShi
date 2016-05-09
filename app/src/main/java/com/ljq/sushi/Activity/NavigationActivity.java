@@ -133,7 +133,7 @@ public class NavigationActivity extends Activity {
 
     //点击button后调用，跳转到主界面，勿忘设置参数
     public void shipToFrame(View v){
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }

@@ -12,6 +12,10 @@ import com.ljq.sushi.R;
 
 public class BaiKe_tab5_Frag extends Fragment {
 
+    public static BaiKe_tab5_Frag newInstance(){
+        BaiKe_tab5_Frag fragment = new BaiKe_tab5_Frag();
+        return fragment;
+    }
 
     public BaiKe_tab5_Frag() {
         // Required empty public constructor

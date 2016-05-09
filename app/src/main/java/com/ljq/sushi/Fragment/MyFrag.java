@@ -16,6 +16,12 @@ import java.lang.reflect.Field;
  */
 public class MyFrag extends Fragment {
 
+
+    public static MyFrag newInstance(){
+        MyFrag fragment = new MyFrag();
+        return fragment;
+    }
+
     public MyFrag(){
 
     }

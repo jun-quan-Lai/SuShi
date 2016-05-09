@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="leftImg" format="reference"></attr>
+    <attr name="midText" format="string"></attr>
+    <attr name="rightImg" format="reference"></attr>
+    <attr name="textSize" format="dimension"></attr>
+    <declare-styleable name="defineView1">
+        <attr name="leftImg"></attr>
+        <attr name="midText"></attr>
+        <attr name="rightImg"></attr>
+        <attr name="textSize"></attr>
+    </declare-styleable>
+</resources>

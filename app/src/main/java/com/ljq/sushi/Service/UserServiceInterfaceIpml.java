@@ -1,5 +1,6 @@
 package com.ljq.sushi.Service;
 
+import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.HttpUtil.NativeHttpUtil;
 
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
     @Override
     public int userLogin(HashMap<String,String> params) throws Exception {
 
-        String jsonString = NativeHttpUtil.post(loginUrl, params);
+        String jsonString = NativeHttpUtil.post(AppConstants.URL_LOGIN, params);
         //Log.d("jsonString",jsonString);
         JSONObject jo = new JSONObject(jsonString);
         int  code = jo.getInt("code");
@@ -23,7 +24,7 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
 
     @Override
     public int userRegist(HashMap<String, String> params) throws Exception {
-        String jsonString = NativeHttpUtil.post(registUrl, params);
+        String jsonString = NativeHttpUtil.post(AppConstants.URL_REGIST, params);
         JSONObject jo = new JSONObject(jsonString);
         int  code = jo.getInt("code");
         return code;

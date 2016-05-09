@@ -8,15 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
+import com.ljq.sushi.Util.SharedPreferenceUtils;
 
 import java.util.HashMap;
 
@@ -70,20 +71,18 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     private CheckBox.OnCheckedChangeListener checkboxlister = new CheckBox.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            SharedPreferences share1 = getSharedPreferences("flag", MODE_PRIVATE);
-            SharedPreferences.Editor editor = share1.edit();
             if (rememberPswChBx.isChecked()) {
-                editor.putString("username", usernameWrapper.getEditText().getText().toString().trim());
-                editor.putString("password", passwordWrapper.getEditText().getText().toString().trim());
-                editor.putBoolean("rememberPsw",true);
+                SharedPreferenceUtils.putString(getApplicationContext(), "username", usernameWrapper.getEditText().getText().toString().trim());
+                SharedPreferenceUtils.putString(getApplicationContext(), "password", passwordWrapper.getEditText().getText().toString().trim());
+                SharedPreferenceUtils.putBoolean(getApplicationContext(), "rememberPsw",true);
             }
             if(autoLoginChBx.isChecked()){
-                editor.putBoolean("autoLogin", true);
+                SharedPreferenceUtils.putBoolean(getApplicationContext(), "autoLogin", true);
             }
             else{
-                editor.putBoolean("autoLogin", false);
+                SharedPreferenceUtils.putBoolean(getApplicationContext(), "autoLogin", false);
             }
-            editor.commit();
+
         }
     };
 
@@ -130,14 +129,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 public void run() {
                     try{
                         httpResultcode = userservice.userLogin(params);
-                        Log.d("code","code"+httpResultcode);
-                        if (httpResultcode==202) {
+                        //Log.d("code","code"+httpResultcode);
+                        if (httpResultcode== AppConstants.OK_LOGIN) {
                             msg = handler.obtainMessage();
                             msg.arg1 = 1;
                             handler.sendMessage(msg);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
-                        } else if(httpResultcode==404){
+                        } else if(httpResultcode==AppConstants.ERROR_NAME_OR_PW){
                             msg = handler.obtainMessage();
                             msg.arg1 = 2;
                             handler.sendMessage(msg);

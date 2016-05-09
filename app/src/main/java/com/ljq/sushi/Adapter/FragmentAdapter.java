@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
 
+    final int PAGE_COUNT =6;
+    private String tabTitles[] = new String[]{"推荐","素食","菜谱","健康","环保","国学"};
     private List<Fragment> fList;
     public FragmentAdapter(FragmentManager fm, List<Fragment> fList) {
         super(fm);
@@ -24,8 +26,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return fList.size();
+        return PAGE_COUNT;
     }
 
-
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
+    }
 }

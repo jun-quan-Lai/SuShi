@@ -36,7 +36,8 @@
         </activity>
         <activity android:name=".Activity.NavigationActivity">
         </activity>
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".Activity.MainActivity"
+            android:theme="@style/ColorTranslucentTheme">
         </activity>
         <activity android:name=".Activity.ContentActivity">
         </activity>

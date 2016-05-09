@@ -15,6 +15,12 @@ import java.lang.reflect.Field;
  * Created by Administrator on 2015/11/8.
  */
 public class RestaurantFrag extends Fragment {
+
+    public static RestaurantFrag newInstance(){
+        RestaurantFrag fragment = new RestaurantFrag();
+        return fragment;
+    }
+
     public RestaurantFrag() {
     }
 

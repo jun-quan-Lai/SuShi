@@ -30,6 +30,11 @@ public class BaiKe_tab2_Frag extends Fragment  {
     private String HTTPURL="http://ss.zgfj.cn/SSZX/";
     private MyRecyclerViewAdapter adapter;
 
+    public static BaiKe_tab2_Frag newInstance(){
+        BaiKe_tab2_Frag fragment = new BaiKe_tab2_Frag();
+        return fragment;
+    }
+
     public BaiKe_tab2_Frag() {
         // Required empty public constructor
     }
@@ -97,6 +102,7 @@ public class BaiKe_tab2_Frag extends Fragment  {
 
     public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
 
+        private ArrayList<News> list;
 
         public  interface OnRecyclerViewListener {
             void onItemClick(int position);
@@ -108,7 +114,7 @@ public class BaiKe_tab2_Frag extends Fragment  {
             this.onRecyclerViewListener = onRecyclerViewListener;
         }
 
-        private ArrayList<News> list;
+
         public MyRecyclerViewAdapter(ArrayList<News> list){
             this.list = list;
         }

@@ -2,17 +2,14 @@ package com.ljq.sushi.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
+import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
-import com.ljq.sushi.Service.UserServiceInterfaceIpml;
-
-import java.util.HashMap;
+import com.ljq.sushi.Util.SharedPreferenceUtils;
 
 /**
  * Created by jc on 2015/11/20.
@@ -26,7 +23,7 @@ public class WelcomeActivity extends Activity {
     boolean firstFlag; //是否首次安装flag
     private String userName;
     private String passWord;  //当用户选择了自动登录，用于填充账号密码
-    private int httpResultcode;
+    private int Resultcode;
     final Intent intent = new Intent();
 
     @Override
@@ -39,18 +36,14 @@ public class WelcomeActivity extends Activity {
 
     //判断且实现应跳转导航动画还是主界面
     private void shipToNavigationOrFrame(){
-
-        final SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
-        firstFlag = share.getBoolean("first", true);
+        firstFlag = SharedPreferenceUtils.getBoolean(this,AppConstants.FIRST_OPEN, true);
         if (firstFlag){
             intent.setClass(this,NavigationActivity.class);
-            SharedPreferences.Editor editor = share.edit();
-            editor.putBoolean("first", false);
-            editor.apply(); //apply与commit作用相同，虽没返回值，但效率更高
+            SharedPreferenceUtils.putBoolean(this, AppConstants.FIRST_OPEN, false);
         }else {//判断用户是否选择自动登录
-            if(share.getBoolean("autoLogin",false)) {
-                userName = share.getString("username", " ");
-                passWord = share.getString("password", " ");
+            /*if(SharedPreferenceUtils.getBoolean(this, "autoLogin", false)) {
+                userName = SharedPreferenceUtils.getString(this, "username", " ");
+                passWord = SharedPreferenceUtils.getString(this, "password", " ");
                 final HashMap<String, String> params = new HashMap();
                 params.put("userName", userName);
                 params.put("userPwd", passWord);
@@ -58,12 +51,12 @@ public class WelcomeActivity extends Activity {
                 new Thread() {
                     public void run() {
                         try {
-                            httpResultcode = userservice.userLogin(params);
-                            Log.d("code","code"+httpResultcode);
+                            Resultcode = userservice.userLogin(params);
+                            //Log.d("code","code"+ Resultcode);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (httpResultcode==202) {
+                        if (Resultcode ==AppConstants.OK_LOGIN) {
                             intent.setClass(WelcomeActivity.this, MainActivity.class);
                         } else {
                             msg = handler.obtainMessage();
@@ -76,7 +69,8 @@ public class WelcomeActivity extends Activity {
             }
             else {
                 intent.setClass(this, LoginActivity.class);
-            }
+            }*/
+            intent.setClass(this, MainActivity.class);
         }
 
         new Handler().postDelayed(new Runnable() { //延时1.5秒
