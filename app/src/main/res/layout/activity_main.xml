@@ -21,12 +21,12 @@
         android:layout_weight="1">
     </FrameLayout>
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/boundary"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/main_radioGroup"
-        android:background="#B2B2B2" />
+        android:background="#B2B2B2" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"

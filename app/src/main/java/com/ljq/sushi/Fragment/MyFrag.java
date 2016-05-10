@@ -1,13 +1,18 @@
 package com.ljq.sushi.Fragment;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 
 import com.ljq.sushi.R;
+import com.ljq.sushi.UI.View.defineView1;
 
 import java.lang.reflect.Field;
 
@@ -16,6 +21,11 @@ import java.lang.reflect.Field;
  */
 public class MyFrag extends Fragment {
 
+
+    private defineView1 collectionShop;
+
+    private LinearLayout mExpandView;
+    private ValueAnimator mAnimator;
 
     public static MyFrag newInstance(){
         MyFrag fragment = new MyFrag();
@@ -36,10 +46,102 @@ public class MyFrag extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        setExpandView();
+        collectionShop = (defineView1) getView().findViewById(R.id.shop);
+        collectionShop.setClickViewListener(new defineView1.ClickViewListener() {
+            @Override
+            public void rightImgClick() {
+                //Toast.makeText(getContext(),"you click me",Toast.LENGTH_LONG).show();
+                if (mExpandView.getVisibility()==View.GONE){
+                    collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_error));
+                    expand();
+                }else{
+                    collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
+                    collapse();
+                }
+            }
+        });
     }
 
+    private void setExpandView() {
+        mExpandView = (LinearLayout) getView().findViewById(R.id.mExpandView);
+
+        mExpandView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mExpandView.getViewTreeObserver().removeOnPreDrawListener(this);
+                mExpandView.setVisibility(View.GONE);
+
+                final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                mExpandView.measure(widthSpec, heightSpec);
+
+                mAnimator = slideAnimator(0, mExpandView.getMeasuredHeight());
+                return true;
+            }
+        });
+    }
+
+    private void expand() {
+        //set Visible
+        mExpandView.setVisibility(View.VISIBLE);
+
+		/* Remove and used in preDrawListener
+		final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+		mExpandView.measure(widthSpec, heightSpec);
+
+		mAnimator = slideAnimator(0, mExpandView.getMeasuredHeight());
+		*/
+
+        mAnimator.start();
+    }
+
+    private void collapse() {
+        int finalHeight = mExpandView.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator(finalHeight, 0);
+
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                //Height=0, but it set visibility to GONE
+                mExpandView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+            }
+        });
+        mAnimator.start();
+    }
+
+    private ValueAnimator slideAnimator(int start, int end) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
 
 
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+
+                ViewGroup.LayoutParams layoutParams = mExpandView.getLayoutParams();
+                layoutParams.height = value;
+                mExpandView.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
 
     @Override
     public void onDetach() {

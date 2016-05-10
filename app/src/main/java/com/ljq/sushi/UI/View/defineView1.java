@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +17,16 @@ import com.ljq.sushi.R;
  * Created by Administrator on 2016/5/9.
  */
 public class defineView1 extends RelativeLayout{
+
+    public interface ClickViewListener{
+        void rightImgClick();
+    }
+
+    private ClickViewListener mlistener;
+
+    public void setClickViewListener(ClickViewListener listener){
+        mlistener=listener;
+    }
 
     private ImageView leftImg;
     private TextView midText;
@@ -63,12 +74,19 @@ public class defineView1 extends RelativeLayout{
         midText = (TextView) findViewById(R.id.txt_mid);
         rightImg = (ImageView) findViewById(R.id.img_right);
 
+        rightImg.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mlistener.rightImgClick();
+            }
+        });
         if(!TextUtils.isEmpty(text)){
             setMidText(text);
             setMidTextSize(textSize);
         }
         setLeftDrawable(leftDrawable);
         setRightDrawable(rightDrawable);
+
     }
 
     public void setMidText(String text){
@@ -85,7 +103,5 @@ public class defineView1 extends RelativeLayout{
     public void setRightDrawable(Drawable drawable){
         rightImg.setImageDrawable(drawable);
     }
-    public void setOnRightImgClickListener(OnClickListener listener){
-        rightImg.setOnClickListener(listener);
-    }
+
 }
