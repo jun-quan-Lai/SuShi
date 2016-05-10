@@ -39,19 +39,59 @@
     </LinearLayout>
 
     <com.ljq.sushi.UI.View.defineView1
-        android:id="@+id/friend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:leftImg="@mipmap/ic_launcher"
-        app:midText="我的好友"
-        app:rightImg="@mipmap/ic_launcher"/>
-
-    <com.ljq.sushi.UI.View.defineView1
         android:id="@+id/like"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftImg="@mipmap/ic_launcher"
         app:midText="我的素圈"
         app:rightImg="@mipmap/ic_launcher"/>
+
+    <com.ljq.sushi.UI.View.defineView1
+        android:id="@+id/friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftImg="@mipmap/ic_launcher"
+        app:midText="我的素友"
+        app:rightImg="@mipmap/ic_launcher"/>
+
+
+
+    <LinearLayout
+        android:padding="10dp"
+        android:id="@+id/friendLive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="素友动态"
+            android:textSize="20dp"
+            android:layout_margin="@dimen/activity_vertical_margin"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="20dp"
+            android:layout_margin="@dimen/activity_vertical_margin"/>
+    </LinearLayout>
 
 </LinearLayout>

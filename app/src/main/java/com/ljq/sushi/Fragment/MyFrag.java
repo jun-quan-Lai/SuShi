@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 /**
  * Created by Administrator on 2015/11/8.
  */
-public class MyFrag extends Fragment {
+public class MyFrag  extends Fragment{
 
 
     private defineView1 collectionShop;
@@ -51,13 +51,12 @@ public class MyFrag extends Fragment {
         collectionShop.setClickViewListener(new defineView1.ClickViewListener() {
             @Override
             public void rightImgClick() {
-                //Toast.makeText(getContext(),"you click me",Toast.LENGTH_LONG).show();
                 if (mExpandView.getVisibility()==View.GONE){
                     collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_error));
-                    expand();
+                    expand(mExpandView);
                 }else{
                     collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
-                    collapse();
+                    collapse(mExpandView);
                 }
             }
         });
@@ -76,15 +75,15 @@ public class MyFrag extends Fragment {
                 final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                 mExpandView.measure(widthSpec, heightSpec);
 
-                mAnimator = slideAnimator(0, mExpandView.getMeasuredHeight());
+                mAnimator = slideAnimator(mExpandView,0, mExpandView.getMeasuredHeight());
                 return true;
             }
         });
     }
 
-    private void expand() {
+    private void expand(View view) {
         //set Visible
-        mExpandView.setVisibility(View.VISIBLE);
+        view.setVisibility(View.VISIBLE);
 
 		/* Remove and used in preDrawListener
 		final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -97,16 +96,18 @@ public class MyFrag extends Fragment {
         mAnimator.start();
     }
 
-    private void collapse() {
-        int finalHeight = mExpandView.getHeight();
+    private void collapse(View view) {
+        int finalHeight = view.getHeight();
 
-        ValueAnimator mAnimator = slideAnimator(finalHeight, 0);
+        ValueAnimator mAnimator = slideAnimator(view,finalHeight, 0);
+        mAnimator.setDuration(0);
 
+        final View thisview=view;
         mAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animator) {
                 //Height=0, but it set visibility to GONE
-                mExpandView.setVisibility(View.GONE);
+                thisview.setVisibility(View.GONE);
             }
 
             @Override
@@ -124,20 +125,19 @@ public class MyFrag extends Fragment {
         mAnimator.start();
     }
 
-    private ValueAnimator slideAnimator(int start, int end) {
+    private ValueAnimator slideAnimator(View view, int start, int end) {
 
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
 
-
+        final View thisview=view;
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 //Update Height
                 int value = (Integer) valueAnimator.getAnimatedValue();
-
-                ViewGroup.LayoutParams layoutParams = mExpandView.getLayoutParams();
+                ViewGroup.LayoutParams layoutParams = thisview.getLayoutParams();
                 layoutParams.height = value;
-                mExpandView.setLayoutParams(layoutParams);
+                thisview.setLayoutParams(layoutParams);
             }
         });
         return animator;
@@ -158,4 +158,5 @@ public class MyFrag extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
 }
