@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     private FragmentManager mFrgmanager;
     private Toolbar toolbar;
-    BottomNavigationBar bottomNavigationBar; //主界面底部导航栏
+    private BottomNavigationBar bottomNavigationBar; //主界面底部导航栏
     private BaiKeFrag baiKeFrag;
     private RestaurantFrag restaurantFrag;
     private MyFrag myFrag;
@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
     private void initView() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if(toolbar!=null)
+            setSupportActionBar(toolbar);
 
         bottomNavigationBar = (BottomNavigationBar)findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.bottom_baike,"百科"))
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setBarBackgroundColor(R.color.green)
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);
+
         setDefaultFragment();
     }
     private void setDefaultFragment() {

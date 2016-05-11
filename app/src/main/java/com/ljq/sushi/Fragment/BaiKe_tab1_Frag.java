@@ -68,7 +68,8 @@ public class BaiKe_tab1_Frag extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    adapter = new MyRecyclerViewAdapter( list);
+                    adapter = new MyRecyclerViewAdapter(list);
+                    mRecyclerView.setAdapter(adapter);
                     adapter.setOnRecyclerViewListener(new MyRecyclerViewAdapter.OnRecyclerViewListener() {
                         @Override
                         public void onItemClick(int position) {
@@ -80,7 +81,6 @@ public class BaiKe_tab1_Frag extends Fragment {
                             return false;
                         }
                     });
-                    mRecyclerView.setAdapter(adapter);
                     break;
                 default:
                     break;
@@ -103,8 +103,9 @@ public class BaiKe_tab1_Frag extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initView();
         initData();
+        initView();
+
     }
 
 
