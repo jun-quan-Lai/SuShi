@@ -34,6 +34,13 @@ public class MyFrag  extends Fragment{
 
     }
 
+   /* @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //隐藏toolbar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }*/
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -43,7 +50,6 @@ public class MyFrag  extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
        /* setExpandView();
         collectionShop = (defineView1) getView().findViewById(R.id.shop);
         collectionShop.setClickViewListener(new defineView1.ClickViewListener() {

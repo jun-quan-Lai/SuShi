@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void initView() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         bottomNavigationBar = (BottomNavigationBar)findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.bottom_baike,"百科"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素食地图"))
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 else{
                     if(mFrgmanager.findFragmentByTag("baike")!=null){
                         transaction.hide(from).show(baiKeFrag);
+                        getSupportActionBar().show(); //显示toolbar
                         from = baiKeFrag;
                     }
                     else
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 {
                     restaurantFrag=RestaurantFrag.newInstance();
                     transaction.hide(from).add(R.id.main_container,restaurantFrag,"res");
+                    getSupportActionBar().hide();//隐藏toolbar
                     from = restaurantFrag;
                 }
 
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     if(mFrgmanager.findFragmentByTag("res")!=null)
                     {
                         transaction.hide(from).show(restaurantFrag);
+                        getSupportActionBar().hide();//隐藏toolbar
                         from = restaurantFrag;
                     }
 
@@ -123,12 +127,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 if(myFrag==null){
                     myFrag= MyFrag.newInstance();
                     transaction.hide(from).add(R.id.main_container,myFrag,"me");
+                    getSupportActionBar().hide();//隐藏toolbar
                     from=myFrag;
                 }
                 else{
                     if(mFrgmanager.findFragmentByTag("me")!=null)
                     {
                         transaction.hide(from).show(myFrag);
+                        getSupportActionBar().hide();//隐藏toolbar
                         from=myFrag;
                     }
 

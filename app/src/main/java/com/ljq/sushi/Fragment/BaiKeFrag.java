@@ -34,6 +34,7 @@ public class BaiKeFrag extends Fragment {
     public BaiKeFrag() {
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
