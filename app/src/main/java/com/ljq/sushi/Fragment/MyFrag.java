@@ -1,6 +1,5 @@
 package com.ljq.sushi.Fragment;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.ljq.sushi.R;
@@ -46,7 +44,7 @@ public class MyFrag  extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setExpandView();
+       /* setExpandView();
         collectionShop = (defineView1) getView().findViewById(R.id.shop);
         collectionShop.setClickViewListener(new defineView1.ClickViewListener() {
             @Override
@@ -59,10 +57,10 @@ public class MyFrag  extends Fragment{
                     collapse(mExpandView);
                 }
             }
-        });
+        });*/
     }
 
-    private void setExpandView() {
+    /*private void setExpandView() {
         mExpandView = (LinearLayout) getView().findViewById(R.id.mExpandView);
 
         mExpandView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -85,13 +83,13 @@ public class MyFrag  extends Fragment{
         //set Visible
         view.setVisibility(View.VISIBLE);
 
-		/* Remove and used in preDrawListener
+		*//* Remove and used in preDrawListener
 		final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 		final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 		mExpandView.measure(widthSpec, heightSpec);
 
 		mAnimator = slideAnimator(0, mExpandView.getMeasuredHeight());
-		*/
+		*//*
 
         mAnimator.start();
     }
@@ -141,7 +139,7 @@ public class MyFrag  extends Fragment{
             }
         });
         return animator;
-    }
+    }*/
 
     @Override
     public void onDetach() {
