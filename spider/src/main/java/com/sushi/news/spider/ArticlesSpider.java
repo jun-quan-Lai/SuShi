@@ -11,20 +11,20 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/3/31.
  */
-public class NewsSpider {
+public class ArticlesSpider {
 
-    public NewsSpider(){
+    public ArticlesSpider(){
 
     }
-    public ArrayList<News>getNewList(String url){
-        ArrayList<News> articleList = new ArrayList<>();
+    public ArrayList<Article>getNewList(String url){
+        ArrayList<Article> articleList = new ArrayList<>();
         Document doc = null;
         try {
             doc = Jsoup.connect(url).timeout(5000).get();
             Element singerListDiv = doc.select("div.newli").first();
             Elements alist = singerListDiv.select(" ul.gd_ul a");
             for(Element link:alist){
-                News article = new News();
+                Article article = new Article();
                 String linkHref = "http://ss.zgfj.cn" +link.attr("href");
                 String linkTitle = link.ownText().trim();
                 article.setUrl(linkHref);

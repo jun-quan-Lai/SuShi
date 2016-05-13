@@ -1,1 +1,1 @@
-include ':app', ':spider', ':citylist'
+include ':app', ':citylist'

@@ -75,11 +75,11 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         listView = (ListView) findViewById(R.id.list);
         mClearEditText = (ClearEditText) findViewById(R.id.et_msg_search);
-        // ÕâÀïÉèÖÃÖĞ¼ä×ÖÄ¸
+        // è¿™é‡Œè®¾ç½®ä¸­é—´å­—æ¯
         right_letter = (MyLetterSortView) findViewById(R.id.right_letter);
         tv_mid_letter = (TextView) findViewById(R.id.tv_mid_letter);
         right_letter.setTextView(tv_mid_letter);
-        //ËÑË÷
+        //æœç´¢
         mCityContainer = findViewById(R.id.city_content_container);
         mSearchContainer = (FrameLayout) this.findViewById(R.id.search_content_container);
         mSearchListView = (ListView) findViewById(R.id.search_list);
@@ -115,7 +115,7 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                // Òş²ØÈí¼üÅÌ
+                // éšè—è½¯é”®ç›˜
                 if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
                     if (getCurrentFocus() != null)
                         inputMethodManager.hideSoftInputFromWindow(
@@ -126,13 +126,13 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
             }
         });
 
-        // ÉèÖÃÓÒ²à´¥Ãş¼àÌı
+        // è®¾ç½®å³ä¾§è§¦æ‘¸ç›‘å¬
         right_letter
                 .setOnTouchingLetterChangedListener(new MyLetterSortView.OnTouchingLetterChangedListener() {
 
                     @Override
                     public void onTouchingLetterChanged(String s) {
-                        // ¸Ã×ÖÄ¸Ê×´Î³öÏÖµÄÎ»ÖÃ
+                        // è¯¥å­—æ¯é¦–æ¬¡å‡ºç°çš„ä½ç½®
                         int position = mAdapter.getPositionForSection(s
                                 .charAt(0));
                         if (position != -1) {
@@ -142,13 +142,13 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
                     }
                 });
 
-        // ¸ù¾İÊäÈë¿òÊäÈëÖµµÄ¸Ä±äÀ´¹ıÂËËÑË÷
+        // æ ¹æ®è¾“å…¥æ¡†è¾“å…¥å€¼çš„æ”¹å˜æ¥è¿‡æ»¤æœç´¢
         mClearEditText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                // µ±ÊäÈë¿òÀïÃæµÄÖµÎª¿Õ£¬¸üĞÂÎªÔ­À´µÄÁĞ±í£¬·ñÔòÎª¹ıÂËÊı¾İÁĞ±í
+                // å½“è¾“å…¥æ¡†é‡Œé¢çš„å€¼ä¸ºç©ºï¼Œæ›´æ–°ä¸ºåŸæ¥çš„åˆ—è¡¨ï¼Œå¦åˆ™ä¸ºè¿‡æ»¤æ•°æ®åˆ—è¡¨
                 filterData2(s.toString());
             }
 
@@ -192,7 +192,7 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
             }
         }).start();
 
-        // ¶Ôlist½øĞĞÅÅĞò
+        // å¯¹listè¿›è¡Œæ’åº
         // Collections.sort(mlist, new PinyinComparator() {
         // });
 

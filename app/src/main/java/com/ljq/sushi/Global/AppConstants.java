@@ -9,6 +9,14 @@ public class AppConstants {
     public static final String URL_LOGIN = "http://114.215.99.203/app/Home/Me/login";
     public static final String URL_REGIST="http://114.215.99.203/app/Home/Me/regist";
 
+    /*
+    get方式传type参数，不传type参数会返回所有文章
+带参数形式：http://114.215.99.203/app/Home/Baike/getArticles/type/菜谱
+     */
+    public static final String URL_ARTICLE="http://114.215.99.203/app/Home/Baike/getArticles";
+
+    public static final String URL_RESTAURANT="";
+
     //服务器返回的状态码
     public static final int OK = 203;
     public static final int OK_REGISTER = 201;

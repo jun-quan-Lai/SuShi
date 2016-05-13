@@ -1,16 +1,22 @@
-package com.sushi.news.spider;
+package com.ljq.sushi.entity;
 
 /**
- * Created by Administrator on 2016/3/24.
+ * Created by Administrator on 2016/5/13.
  */
-public class News {
+public class Article {
     private String imageUrl;
     private String title;
     private String summary;
     private String url;
     private String content;
 
-    public News() {
+    public Article() {
+    }
+
+    public Article(String imageUrl, String title, String summary) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.summary = summary;
     }
 
     public String getUrl() {
@@ -29,11 +35,7 @@ public class News {
         this.content = content;
     }
 
-    public News(String imageUrl, String title, String summary) {
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.summary = summary;
-    }
+
 
     public String getImageUrl() {
         return imageUrl;
@@ -59,3 +61,4 @@ public class News {
         this.summary = summary;
     }
 }
+

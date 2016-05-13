@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,7 +30,7 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.sushi.news.spider.News;
+import com.ljq.sushi.entity.Article;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +47,8 @@ import java.util.List;
 public class BaiKe_tab1_Frag extends Fragment {
 
     RecyclerView mRecyclerView;
-    private List<News> list;
-    private String HTTPURL = "http://114.215.99.203/app/Home/Baike/getArticles";
+    private List<Article> list;
+
     private MyRecyclerViewAdapter adapter;
 
 
@@ -103,8 +104,8 @@ public class BaiKe_tab1_Frag extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
         initView();
+        initData();
 
     }
 
@@ -116,7 +117,7 @@ public class BaiKe_tab1_Frag extends Fragment {
     }
 
     private void initData() {
-        list = new ArrayList<News>();
+        list = new ArrayList<Article>();
 
         final File baseDir = getActivity().getCacheDir();
         OkHttpClient client = new OkHttpClient();
@@ -129,7 +130,7 @@ public class BaiKe_tab1_Frag extends Fragment {
             }
         }
         Request request = new Request.Builder()
-                .url(HTTPURL)
+                .url(AppConstants.URL_ARTICLE)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -139,14 +140,14 @@ public class BaiKe_tab1_Frag extends Fragment {
                 try {
                     JSONObject jo1 = new JSONObject(response.body().string());
                     JSONArray ja = new JSONArray(jo1.getString("data"));
-                    News news;
+                    Article article;
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject data = ja.getJSONObject(i);
                         String imageUrl = data.getString("thumbnail");
                         String title = data.getString("title");
                         String summary = data.getString("ssumary");
-                        news = new News(imageUrl, title, summary);
-                        list.add(news);
+                        article = new Article(imageUrl, title, summary);
+                        list.add(article);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -162,7 +163,7 @@ public class BaiKe_tab1_Frag extends Fragment {
     }
     public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
 
-        private List<News> list;
+        private List<Article> list;
         private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
         private DisplayImageOptions options;
 
@@ -177,7 +178,7 @@ public class BaiKe_tab1_Frag extends Fragment {
             this.onRecyclerViewListener = onRecyclerViewListener;
         }
 
-        public MyRecyclerViewAdapter( List<News> list) {
+        public MyRecyclerViewAdapter( List<Article> list) {
 
             this.list = list;
             options = new DisplayImageOptions.Builder()
@@ -203,23 +204,28 @@ public class BaiKe_tab1_Frag extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             MyViewHolder myholder = (MyViewHolder) holder;
             myholder.position=position;
-            News news = list.get(position);
-            //myholder.txtview.setText(news.getTitle());
-            myholder.title.setText(news.getTitle());
-            myholder.summary.setText(news.getSummary());
+            Article article = list.get(position);
+
+            myholder.title.setText(article.getTitle());
+            myholder.summary.setText(article.getSummary());
             if(list.get(position).getImageUrl()!=null)
             {
                 ImageLoader.getInstance().displayImage(list.get(position).getImageUrl(),myholder.iv,options,animateFirstListener);
             }
             else
             {
-                myholder.iv.setVisibility(View.GONE);
+                myholder.iv.setVisibility(View.GONE); //没有图片，则不显示
             }
         }
 
         @Override
         public int getItemCount() {
             return list.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
@@ -256,10 +262,7 @@ public class BaiKe_tab1_Frag extends Fragment {
             }
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+
 
 
         private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {

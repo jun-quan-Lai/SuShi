@@ -24,8 +24,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/universal-image-loader-1.9.5.jar')
-
-    compile project(':spider')
     compile 'com.android.support:design:23.3.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.android.support:support-v4:23.3.0'

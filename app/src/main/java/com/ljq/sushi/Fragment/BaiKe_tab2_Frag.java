@@ -1,7 +1,6 @@
 package com.ljq.sushi.Fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,21 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.ljq.sushi.Activity.ContentActivity;
 import com.ljq.sushi.R;
-import com.sushi.news.spider.News;
-import com.sushi.news.spider.NewsSpider;
-
-import java.util.ArrayList;
-
 
 public class BaiKe_tab2_Frag extends Fragment  {
 
     RecyclerView mRecyclerView;
-    private ArrayList<News> list;
-    private String HTTPURL="http://ss.zgfj.cn/SSZX/";
+
     private MyRecyclerViewAdapter adapter;
 
     public static BaiKe_tab2_Frag newInstance(){
@@ -46,13 +37,11 @@ public class BaiKe_tab2_Frag extends Fragment  {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    adapter = new MyRecyclerViewAdapter(list);
+                    adapter = new MyRecyclerViewAdapter();
                     adapter.setOnRecyclerViewListener(new MyRecyclerViewAdapter.OnRecyclerViewListener() {
                         @Override
                         public void onItemClick(int position) {
-                            Intent intent = new Intent(getActivity(),ContentActivity.class);
-                            intent.putExtra("contentUrl",list.get(position).getUrl());
-                            startActivity(intent);
+
                         }
 
                         @Override
@@ -91,18 +80,13 @@ public class BaiKe_tab2_Frag extends Fragment  {
     }
     private void initdata() {
 
-        final NewsSpider spider = new NewsSpider();
-        new Thread(){
-            public void run(){
-            list = spider.getNewList(HTTPURL);
-            mHandler.obtainMessage(0).sendToTarget();
-        }}.start();
+
     }
 
 
     public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
 
-        private ArrayList<News> list;
+
 
         public  interface OnRecyclerViewListener {
             void onItemClick(int position);
@@ -115,8 +99,8 @@ public class BaiKe_tab2_Frag extends Fragment  {
         }
 
 
-        public MyRecyclerViewAdapter(ArrayList<News> list){
-            this.list = list;
+        public MyRecyclerViewAdapter(){
+
         }
 
         @Override
@@ -131,27 +115,22 @@ public class BaiKe_tab2_Frag extends Fragment  {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             MyViewHolder myholder = (MyViewHolder) holder;
             myholder.position=position;
-            News news = list.get(position);
-            myholder.txtview.setText(news.getTitle());
+
         }
 
         @Override
         public int getItemCount() {
-            return list.size();
+                return 0;
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
                 View.OnLongClickListener{
 
-            public TextView txtview;
+
             public int position;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                txtview = (TextView) itemView.findViewById(R.id.bai_ke_tab2_list_title);
-                txtview.setOnClickListener(this);
-                txtview.setOnLongClickListener(this);
-
             }
 
             @Override
