@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/restaurant_img"
+        android:layout_width="120dp"
+        android:layout_height="140dp"
+
+        android:padding="3dp"
+        android:src="@mipmap/ic_launcher"
+        />
+    <TextView
+        android:id="@+id/restaurant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/restaurant_img"
+        android:gravity="center_vertical"
+        android:text="素食馆"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        />
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurant_name"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/restaurant_img"
+        android:text="地址"
+        android:textSize="15sp"
+        android:textColor="@android:color/darker_gray"/>
+
+</RelativeLayout>
