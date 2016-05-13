@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
 
     private Context context = LetterSortActivity.this;
 
+    private Button btn_back;
     private ClearEditText mClearEditText;
     private TextView tv_mid_letter;
     private ListView listView;
@@ -67,6 +69,8 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
 
     protected void initView() {
 
+        btn_back = (Button) findViewById(R.id.back);
+
         inputMethodManager = (InputMethodManager) this
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         listView = (ListView) findViewById(R.id.list);
@@ -85,6 +89,14 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
     }
 
     protected void setLinstener() {
+
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // tv_reget_pwd.setOnClickListener(this);
 

@@ -7,7 +7,7 @@
         android:id="@+id/iv"
         android:layout_width="120dp"
         android:layout_height="140dp"
-        android:layout_centerVertical="true"
+
         android:padding="3dp"
         android:src="@mipmap/ic_launcher"
         />
@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/iv"
         android:gravity="center_vertical"
-        android:text=""
+        android:text="标题"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -30,7 +30,7 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/iv"
-        android:text=""
+        android:text="摘要"
         android:textSize="15sp"
         android:textColor="@android:color/darker_gray"/>
 </RelativeLayout>
