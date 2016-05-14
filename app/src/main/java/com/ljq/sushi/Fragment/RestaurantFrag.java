@@ -78,6 +78,10 @@ public class RestaurantFrag extends Fragment {
                 case 0:
                     adapter = new MyRecyclerViewAdapter(list);
                     mRecyclerView.setAdapter(adapter);
+                    if(mRecyclerView.getVisibility()==View.GONE){
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        noDataView.setVisibility(View.GONE);
+                    }
                     adapter.setOnRecyclerViewListener(new MyRecyclerViewAdapter.OnRecyclerViewListener() {
                         @Override
                         public void onItemClick(int position) {
@@ -93,7 +97,6 @@ public class RestaurantFrag extends Fragment {
                 case 1:
                     mRecyclerView.setVisibility(View.GONE);
                     noDataView.setVisibility(View.VISIBLE);
-                    cityName.setText(city);
                     break;
                 default:
                     break;
@@ -119,7 +122,7 @@ public class RestaurantFrag extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d("RestaurantFrag","onActivityCreated");
         initView();
-        Log.d("restaurantUrl",AppConstants.URL_RESTAURANT+city);
+
         //initData(city);在这里实现也会遇到坑
 
     }
@@ -129,6 +132,7 @@ public class RestaurantFrag extends Fragment {
         super.onStart();
         Log.d("RestaurantFrag","onStart");
         initData(city);
+        Log.d("restaurantUrl",AppConstants.URL_RESTAURANT+city);
         if(city!="")
             cityName.setText(city);
     }
@@ -188,6 +192,7 @@ public class RestaurantFrag extends Fragment {
                 try {
                     JSONObject jo1 = new JSONObject(response.body().string());
                     int code = jo1.getInt("code");
+                    Log.d("code","mycode"+code);
                     if(code==AppConstants.WITHOUT_RESTAURANT){
                         //mRecyclerView.setVisibility(View.GONE);
                         //noDataView.setVisibility(View.VISIBLE);
