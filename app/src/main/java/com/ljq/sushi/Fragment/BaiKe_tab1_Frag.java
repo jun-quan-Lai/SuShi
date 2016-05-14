@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
+import com.ljq.sushi.entity.Article;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -30,7 +31,6 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.ljq.sushi.entity.Article;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,7 +119,7 @@ public class BaiKe_tab1_Frag extends Fragment {
     private void initData() {
         list = new ArrayList<Article>();
 
-        final File baseDir = getActivity().getCacheDir();
+      final File baseDir = getActivity().getCacheDir();
         OkHttpClient client = new OkHttpClient();
         if(baseDir!=null){
             final File cacheDir = new File(baseDir,"HttpResponseCache");

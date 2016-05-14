@@ -15,7 +15,19 @@ public class AppConstants {
      */
     public static final String URL_ARTICLE="http://114.215.99.203/app/Home/Baike/getArticles";
 
-    public static final String URL_RESTAURANT="http://114.215.99.203/app/Home/Restaurant/getRestaurants";
+    public static final String URL_RESTAURANT="http://114.215.99.203/app/Home/Restaurant/getRestaurants/city/";
+
+
+    /*
+    从MainActivity调用(RestaurantFrag中出现)startActivityForResult()
+    去请求更多城市时的请求代码
+     */
+    public static final int CITY_REQUEST = 1;
+
+    /*
+    城市Activity被finish后成功返回城市的返回代码
+     */
+    public static final int CITY_RESULT_SUCCESS = 1;
 
     //服务器返回的状态码
     public static final int OK = 203;

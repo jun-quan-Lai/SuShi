@@ -2,6 +2,7 @@ package com.ljq.sushi.citylist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -107,6 +108,10 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
                                     int position, long id) {
                 T.showShort(getApplicationContext(),
                         ((City) mAdapter.getItem(position)).toString());
+                Intent intent = new Intent();
+                intent.putExtra("city",(((City) mAdapter.getItem(position)).getCity()));
+                setResult(1,intent);
+                finish();
 
             }
         });
@@ -169,7 +174,12 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-
+                        T.showShort(getApplicationContext(),
+                                ((City) mSearchCityAdapter.getItem(position)).toString());
+                        Intent intent = new Intent();
+                        intent.putExtra("city",(((City) mSearchCityAdapter.getItem(position)).getCity()));
+                        setResult(1,intent);
+                        finish();
                     }
                 });
     }

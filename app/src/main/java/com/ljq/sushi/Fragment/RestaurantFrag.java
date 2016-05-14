@@ -9,12 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ljq.sushi.Global.AppConstants;
@@ -50,9 +52,12 @@ import java.util.List;
 public class RestaurantFrag extends Fragment {
 
 
+    private TextView cityName;
     private Button changeCity;
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private RelativeLayout noDataView;
 
+    private String city=""; //不能设为null，下面有坑
     private List<Restaurant> list;
 
     private MyRecyclerViewAdapter adapter;
@@ -85,6 +90,11 @@ public class RestaurantFrag extends Fragment {
                         }
                     });
                     break;
+                case 1:
+                    mRecyclerView.setVisibility(View.GONE);
+                    noDataView.setVisibility(View.VISIBLE);
+                    cityName.setText(city);
+                    break;
                 default:
                     break;
             }
@@ -107,15 +117,49 @@ public class RestaurantFrag extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d("RestaurantFrag","onActivityCreated");
         initView();
-        initData();
+        Log.d("restaurantUrl",AppConstants.URL_RESTAURANT+city);
+        //initData(city);在这里实现也会遇到坑
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("RestaurantFrag","onStart");
+        initData(city);
+        if(city!="")
+            cityName.setText(city);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("RestaurantFrag","OnResume");
     }
 
 
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case AppConstants.CITY_REQUEST:
+                switch (resultCode){
+                    case AppConstants.CITY_RESULT_SUCCESS:
+                        city = data.getStringExtra("city");
+                        Log.d("city",city);
+                }
+        }
+    }
+
     private void initView() {
 
+        cityName = (TextView) getView().findViewById(R.id.cityNmae);
+
+        noDataView = (RelativeLayout) getView().findViewById(R.id.noDataView);
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.restaurant_recyler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         changeCity = (Button) getView().findViewById(R.id.changCity);
@@ -123,17 +167,17 @@ public class RestaurantFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),LetterSortActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,AppConstants.CITY_REQUEST);
             }
         });
     }
 
-    private void initData() {
+    private void initData(String city) {
         list = new ArrayList<>();
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(AppConstants.URL_RESTAURANT)
+                .url(AppConstants.URL_RESTAURANT+city)
                 .build();
         Call call = client.newCall(request);
 
@@ -143,20 +187,30 @@ public class RestaurantFrag extends Fragment {
             public void onResponse(Response response) throws IOException {
                 try {
                     JSONObject jo1 = new JSONObject(response.body().string());
-                    JSONArray ja = new JSONArray(jo1.getString("data"));
-                    Restaurant restaurant;
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject data = ja.getJSONObject(i);
-                        String imageUrl = data.getString("imgurl");
-                        String name = data.getString("name");
-                        String addr = data.getString("address");
-                        restaurant = new Restaurant(imageUrl, name, addr);
-                        list.add(restaurant);
+                    int code = jo1.getInt("code");
+                    if(code==AppConstants.WITHOUT_RESTAURANT){
+                        //mRecyclerView.setVisibility(View.GONE);
+                        //noDataView.setVisibility(View.VISIBLE);
+                        mHandler.obtainMessage(1).sendToTarget();//通过Handler更新界面
+                    }
+                    else{
+                        JSONArray ja = new JSONArray(jo1.getString("data"));
+                        Restaurant restaurant;
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject data = ja.getJSONObject(i);
+                            String imageUrl = data.getString("imgurl");
+                            String name = data.getString("name");
+                            String addr = data.getString("address");
+                            restaurant = new Restaurant(imageUrl, name, addr);
+                            list.add(restaurant);
+                        }
+
+                        mHandler.obtainMessage(0).sendToTarget();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mHandler.obtainMessage(0).sendToTarget();
+
             }
 
             @Override
