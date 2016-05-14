@@ -15,7 +15,7 @@ public class AppConstants {
      */
     public static final String URL_ARTICLE="http://114.215.99.203/app/Home/Baike/getArticles";
 
-    public static final String URL_RESTAURANT="http://114.215.99.203/app/Home/Restaurant/getRestaurants/city/东莞";
+    public static final String URL_RESTAURANT="http://114.215.99.203/app/Home/Restaurant/getRestaurants";
 
     //服务器返回的状态码
     public static final int OK = 203;
@@ -24,6 +24,8 @@ public class AppConstants {
     public static final int ERROR_NAME_EXIST = 402;
     public static final int ERROR_NAME_OR_PW = 404;
     public static final int ERROR_SERVICE = 403;
+
+    public static final int WITHOUT_RESTAURANT = 405;
 
 
 }
