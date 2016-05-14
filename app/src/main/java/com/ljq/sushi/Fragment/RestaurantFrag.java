@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,12 @@ public class RestaurantFrag extends Fragment {
 
     };
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // super.onSaveInstanceState(outState);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,7 +108,6 @@ public class RestaurantFrag extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initView();
         initData();
 
@@ -143,15 +149,16 @@ public class RestaurantFrag extends Fragment {
                     Restaurant restaurant;
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject data = ja.getJSONObject(i);
-                        String imageUrl = data.getString("restaurantImg");
-                        String name = data.getString("restaurantName");
-                        String addr = data.getString("restaurantAddress");
+                        String imageUrl = data.getString("imgurl");
+                        String name = data.getString("name");
+                        String addr = data.getString("adress");
                         restaurant = new Restaurant(imageUrl, name, addr);
                         list.add(restaurant);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d("data","I get data success");
                 mHandler.obtainMessage(0).sendToTarget();
             }
 

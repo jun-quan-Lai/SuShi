@@ -15,7 +15,7 @@ public class AppConstants {
      */
     public static final String URL_ARTICLE="http://114.215.99.203/app/Home/Baike/getArticles";
 
-    public static final String URL_RESTAURANT="";
+    public static final String URL_RESTAURANT="http://114.215.99.203/app/Home/Restaurant/getRestaurants/city/东莞";
 
     //服务器返回的状态码
     public static final int OK = 203;
