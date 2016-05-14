@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,6 @@ public class RestaurantFrag extends Fragment {
         initView();
         initData();
 
-
     }
 
 
@@ -151,14 +149,13 @@ public class RestaurantFrag extends Fragment {
                         JSONObject data = ja.getJSONObject(i);
                         String imageUrl = data.getString("imgurl");
                         String name = data.getString("name");
-                        String addr = data.getString("adress");
+                        String addr = data.getString("address");
                         restaurant = new Restaurant(imageUrl, name, addr);
                         list.add(restaurant);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("data","I get data success");
                 mHandler.obtainMessage(0).sendToTarget();
             }
 

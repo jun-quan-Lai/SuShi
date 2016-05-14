@@ -12,7 +12,7 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(String imgUrl, String address, String restaurantName) {
+    public Restaurant(String imgUrl, String restaurantName,String address) {
         this.imgUrl = imgUrl;
         this.address = address;
         this.restaurantName = restaurantName;

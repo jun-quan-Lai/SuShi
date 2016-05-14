@@ -161,6 +161,7 @@ public class BaiKe_tab1_Frag extends Fragment {
             }
         });
     }
+
     public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
 
         private List<Article> list;
