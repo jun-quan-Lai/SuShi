@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* //对Android4.4做状态栏和Toolbar的沉浸（只支持4.4以上）
+      /*  //对Android4.4做状态栏和Toolbar的沉浸（只支持4.4以上）
         if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
             WindowManager.LayoutParams winParams = getWindow().getAttributes();
             final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;

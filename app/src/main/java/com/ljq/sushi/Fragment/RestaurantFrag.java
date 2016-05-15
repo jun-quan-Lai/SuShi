@@ -1,7 +1,6 @@
 package com.ljq.sushi.Fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,21 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ljq.sushi.Adapter.RestaurantFragAdapter;
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
 import com.ljq.sushi.citylist.LetterSortActivity;
 import com.ljq.sushi.entity.Restaurant;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -42,8 +34,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -60,7 +50,7 @@ public class RestaurantFrag extends Fragment {
     private String city=""; //不能设为null，下面有坑
     private List<Restaurant> list;
 
-    private MyRecyclerViewAdapter adapter;
+    private RestaurantFragAdapter adapter;
 
     public static RestaurantFrag newInstance(){
         RestaurantFrag fragment = new RestaurantFrag();
@@ -76,13 +66,13 @@ public class RestaurantFrag extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    adapter = new MyRecyclerViewAdapter(list);
+                    adapter = new RestaurantFragAdapter(list);
                     mRecyclerView.setAdapter(adapter);
                     if(mRecyclerView.getVisibility()==View.GONE){
                         mRecyclerView.setVisibility(View.VISIBLE);
                         noDataView.setVisibility(View.GONE);
                     }
-                    adapter.setOnRecyclerViewListener(new MyRecyclerViewAdapter.OnRecyclerViewListener() {
+                    adapter.setOnRecyclerViewListener(new RestaurantFragAdapter.OnRecyclerViewListener() {
                         @Override
                         public void onItemClick(int position) {
 
@@ -122,9 +112,6 @@ public class RestaurantFrag extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d("RestaurantFrag","onActivityCreated");
         initView();
-
-        //initData(city);在这里实现也会遇到坑
-
     }
 
     @Override
@@ -241,116 +228,4 @@ public class RestaurantFrag extends Fragment {
         }
     }
 
-
-    public static class MyRecyclerViewAdapter extends RecyclerView.Adapter {
-
-        private List<Restaurant> list;
-        private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-        private DisplayImageOptions options;
-
-        public  interface OnRecyclerViewListener {
-            void onItemClick(int position);
-            boolean onItemLongClick(int position);
-        }
-        private OnRecyclerViewListener onRecyclerViewListener;
-
-        public void setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener){
-            this.onRecyclerViewListener = onRecyclerViewListener;
-        }
-
-
-        public MyRecyclerViewAdapter(List<Restaurant> list){
-            this.list = list;
-            options = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.mipmap.ic_stub)
-                    .showImageForEmptyUri(R.mipmap.ic_empty)
-                    .showImageOnFail(R.mipmap.ic_error)
-                    .cacheInMemory(true)
-                    .cacheOnDisk(true)
-                    .considerExifParams(true)
-                    .displayer(new SimpleBitmapDisplayer())
-                    .build();
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item,null);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-            view.setLayoutParams(lp);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MyViewHolder myholder = (MyViewHolder) holder;
-            myholder.position=position;
-
-            Restaurant restaurant = list.get(position);
-            myholder.name.setText(restaurant.getRestaurantName());
-            myholder.address.setText(restaurant.getAddress());
-
-            if(restaurant.getImgUrl()!=null)
-                ImageLoader.getInstance().displayImage(restaurant.getImgUrl(),myholder.iv,options,animateFirstListener);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-                View.OnLongClickListener{
-
-
-            ImageView iv;
-            TextView name, address;
-            public int position;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                iv= (ImageView) itemView.findViewById(R.id.restaurant_img);
-                name = (TextView) itemView.findViewById(R.id.restaurant_name);
-                address = (TextView) itemView.findViewById(R.id.restaurant_address);
-            }
-
-            @Override
-            public void onClick(View v) {
-                if(null != onRecyclerViewListener){
-                    onRecyclerViewListener.onItemClick(position);
-                }
-            }
-
-            @Override
-            public boolean onLongClick(View v) {
-                if(null != onRecyclerViewListener){
-                    onRecyclerViewListener.onItemLongClick(position);
-                }
-                return false;
-            }
-
-        }
-
-        private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
-            static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if(loadedImage != null){
-                    ImageView imageView = (ImageView)view;
-                    boolean firstDisplay = !displayedImages.contains(imageUri);
-                    if(firstDisplay){
-                        FadeInBitmapDisplayer.animate(imageView,500);
-                        displayedImages.add(imageUri);
-                    }
-                }
-            }
-        }
-
-    }
 }

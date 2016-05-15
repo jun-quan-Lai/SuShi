@@ -19,7 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ljq.sushi.citylist.common.T;
 import com.ljq.sushi.citylist.db.City;
 import com.ljq.sushi.citylist.db.MyCityDBHelper;
 
@@ -106,8 +105,6 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                T.showShort(getApplicationContext(),
-                        ((City) mAdapter.getItem(position)).toString());
                 Intent intent = new Intent();
                 intent.putExtra("city",(((City) mAdapter.getItem(position)).getCity()));
                 setResult(1,intent);
@@ -174,8 +171,7 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        T.showShort(getApplicationContext(),
-                                ((City) mSearchCityAdapter.getItem(position)).toString());
+
                         Intent intent = new Intent();
                         intent.putExtra("city",(((City) mSearchCityAdapter.getItem(position)).getCity()));
                         setResult(1,intent);
@@ -203,8 +199,8 @@ public class LetterSortActivity extends Activity implements View.OnClickListener
         }).start();
 
         // 对list进行排序
-        // Collections.sort(mlist, new PinyinComparator() {
-        // });
+         //Collections.sort(mlist, new PinyinComparator() {
+         //});
 
     }
 

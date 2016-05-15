@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ljq.sushi.Adapter.FragmentAdapter;
+import com.ljq.sushi.Adapter.BaikeFragAdapter;
 import com.ljq.sushi.R;
 
 import java.lang.reflect.Field;
@@ -74,7 +74,7 @@ public class BaiKeFrag extends Fragment {
         fragmentList.add(BaiKe_tab4_Frag.newInstance());
         fragmentList.add(BaiKe_tab5_Frag.newInstance());
         fragmentList.add(BaiKe_tab6_Frag.newInstance());
-        viewPager.setAdapter(new FragmentAdapter(mFragmanager,fragmentList));
+        viewPager.setAdapter(new BaikeFragAdapter(mFragmanager,fragmentList));
     }
 
     private void initView() {

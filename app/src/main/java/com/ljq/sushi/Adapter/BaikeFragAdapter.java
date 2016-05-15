@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/11/8.
  */
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class BaikeFragAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT =6;
     private String tabTitles[] = new String[]{"推荐","素食","菜谱","健康","环保","国学"};
     private List<Fragment> fList;
-    public FragmentAdapter(FragmentManager fm, List<Fragment> fList) {
+    public BaikeFragAdapter(FragmentManager fm, List<Fragment> fList) {
         super(fm);
         this.fList = fList;
     }
