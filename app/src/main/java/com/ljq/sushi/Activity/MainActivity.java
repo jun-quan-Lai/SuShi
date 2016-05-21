@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ljq.sushi.Fragment.BaiKeFrag;
+import com.ljq.sushi.Fragment.LiveFragment;
 import com.ljq.sushi.Fragment.MyFrag;
 import com.ljq.sushi.Fragment.RestaurantFrag;
 import com.ljq.sushi.R;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private BottomNavigationBar bottomNavigationBar; //主界面底部导航栏
     private BaiKeFrag baiKeFrag;
     private RestaurantFrag restaurantFrag;
+    private LiveFragment liveFragment;
     private MyFrag myFrag;
     private Fragment from;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         bottomNavigationBar = (BottomNavigationBar)findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.bottom_baike,"百科"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素食地图"))
+                .addItem(new BottomNavigationItem(R.mipmap.bottom_live,"素食生活"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_me,"我"))
                 .setActiveColor("#FFFFFF")
                 .setInActiveColor("#ECECEC")
@@ -123,6 +126,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 }
                 break;
             case 2:
+                if(liveFragment==null){
+                    liveFragment = LiveFragment.newInstance();
+                    transaction.hide(from).add(R.id.main_container,liveFragment,"live");
+                    getSupportActionBar().hide();//隐藏toolbar
+                    from=liveFragment;
+                }
+                else{
+                    if(mFrgmanager.findFragmentByTag("live")!=null){
+                        transaction.hide(from).show(liveFragment);
+                        getSupportActionBar().hide();//隐藏toolbar
+                        from=liveFragment;
+                    }
+                    else
+                        transaction.add(R.id.main_container,liveFragment,"live");
+                }
+                break;
+            case 3:
                 if(myFrag==null){
                     myFrag= MyFrag.newInstance();
                     transaction.hide(from).add(R.id.main_container,myFrag,"me");
@@ -136,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         getSupportActionBar().hide();//隐藏toolbar
                         from=myFrag;
                     }
-
                     else
                         transaction.add(R.id.main_container,myFrag,"me");
                 }
