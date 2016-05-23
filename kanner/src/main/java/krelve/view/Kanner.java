@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -23,6 +24,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 一个实现图片轮播的广告器
+ */
 public class Kanner extends FrameLayout {
     private int count;
     private ImageLoader mImageLoader;
@@ -36,6 +40,17 @@ public class Kanner extends FrameLayout {
     private List<ImageView> iv_dots;
     private Handler handler = new Handler();
     private DisplayImageOptions options;
+
+    private AdsViewClickListener clickListener;
+
+    public interface AdsViewClickListener{
+        void onItemClick(int item);
+    }
+
+
+    public void setAdsViewClickListenr(AdsViewClickListener listener){
+            this.clickListener = listener;
+    }
 
     public Kanner(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -77,7 +92,17 @@ public class Kanner extends FrameLayout {
         vp = (ViewPager) view.findViewById(R.id.vp);
         ll_dot = (LinearLayout) view.findViewById(R.id.ll_dot);
         ll_dot.removeAllViews();
+        vp.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int item = currentItem;
+                clickListener.onItemClick(item);
+                return false;
+            }
+        });
     }
+
+
 
     private void initImgFromRes(int[] imagesRes) {
         count = imagesRes.length;

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ljq.sushi.R;
 
@@ -42,9 +43,16 @@ public class LiveFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         adsView = (Kanner) getView().findViewById(R.id.ads);
-        int[] imagesRes = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
-                R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+        int[] imagesRes = {R.mipmap.ads1, R.mipmap.ads2, R.mipmap.ads3,
+                R.mipmap.ads4, R.mipmap.ads5};
         adsView.setImagesRes(imagesRes);
+
+        adsView.setAdsViewClickListenr(new Kanner.AdsViewClickListener() {
+            @Override
+            public void onItemClick(int item) {
+                Toast.makeText(getActivity(),"you click"+item, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
