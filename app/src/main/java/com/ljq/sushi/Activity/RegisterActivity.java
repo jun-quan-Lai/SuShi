@@ -55,8 +55,9 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
                 password = passwordWrapper.getEditText().getText().toString().trim();
                 if(regist(phoneNumber,password)){
                     UserUtil.saveUser(getApplicationContext(),phoneNumber,password,new Date().getTime());
+                    this.finish();
                 }
-                this.finish();
+
                 break;
             default:
                 break;
@@ -72,7 +73,7 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
             phoneNumberWrapper.setError(null);
             passwordWrapper.setError("密码不能为空");
         }
-        else if(phoneNumber.length()<11){
+        else if(phoneNumber.length()!=11){
             phoneNumberWrapper.setError("手机号码不合法");
             passwordWrapper.setError(null);
         }

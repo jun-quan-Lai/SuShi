@@ -72,7 +72,4 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
         }
         return null;
     }
-
-
-
 }

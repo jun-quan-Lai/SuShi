@@ -60,8 +60,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 if(doLogin(username,password)){
                     //把帐号信息保存到SharedPreference
                     UserUtil.saveUser(getApplicationContext(),username,password, new Date().getTime());
+                    this.finish();
                 }
-                this.finish();
+
                 break;
             case R.id.btn_regist:
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
