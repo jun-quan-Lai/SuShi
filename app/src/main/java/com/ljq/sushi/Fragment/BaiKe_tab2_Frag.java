@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ljq.sushi.R;
+import com.ljq.sushi.UI.DividerItemDecoration;
 
 public class BaiKe_tab2_Frag extends Fragment  {
 
@@ -77,6 +78,8 @@ public class BaiKe_tab2_Frag extends Fragment  {
     private void initView() {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.baike_tab2_recyler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
+
     }
     private void initdata() {
 

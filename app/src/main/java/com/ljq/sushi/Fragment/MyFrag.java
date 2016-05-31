@@ -1,29 +1,30 @@
 package com.ljq.sushi.Fragment;
 
-import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.ImageView;
 
+import com.ljq.sushi.Activity.LoginActivity;
+import com.ljq.sushi.Activity.RegisterActivity;
 import com.ljq.sushi.R;
-import com.ljq.sushi.UI.View.defineView1;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by Administrator on 2015/11/8.
  */
-public class MyFrag  extends Fragment{
+public class MyFrag  extends Fragment implements View.OnClickListener{
 
 
-    private defineView1 collectionShop;
-
-    private LinearLayout mExpandView;
-    private ValueAnimator mAnimator;
+    private ImageView headImg;
+    private Button login;
+    private Button register;
 
     public static MyFrag newInstance(){
         MyFrag fragment = new MyFrag();
@@ -34,12 +35,7 @@ public class MyFrag  extends Fragment{
 
     }
 
-   /* @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //隐藏toolbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-    }*/
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -50,102 +46,18 @@ public class MyFrag  extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       /* setExpandView();
-        collectionShop = (defineView1) getView().findViewById(R.id.shop);
-        collectionShop.setClickViewListener(new defineView1.ClickViewListener() {
-            @Override
-            public void rightImgClick() {
-                if (mExpandView.getVisibility()==View.GONE){
-                    collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_error));
-                    expand(mExpandView);
-                }else{
-                    collectionShop.setRightDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
-                    collapse(mExpandView);
-                }
-            }
-        });*/
+        initView();
+
     }
 
-    /*private void setExpandView() {
-        mExpandView = (LinearLayout) getView().findViewById(R.id.mExpandView);
+    private void initView(){
+        headImg = (ImageView) getView().findViewById(R.id.myHead);
+        login = (Button) getView().findViewById(R.id.login);
+        register = (Button) getView().findViewById(R.id.register);
 
-        mExpandView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                mExpandView.getViewTreeObserver().removeOnPreDrawListener(this);
-                mExpandView.setVisibility(View.GONE);
-
-                final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                mExpandView.measure(widthSpec, heightSpec);
-
-                mAnimator = slideAnimator(mExpandView,0, mExpandView.getMeasuredHeight());
-                return true;
-            }
-        });
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
     }
-
-    private void expand(View view) {
-        //set Visible
-        view.setVisibility(View.VISIBLE);
-
-		*//* Remove and used in preDrawListener
-		final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		mExpandView.measure(widthSpec, heightSpec);
-
-		mAnimator = slideAnimator(0, mExpandView.getMeasuredHeight());
-		*//*
-
-        mAnimator.start();
-    }
-
-    private void collapse(View view) {
-        int finalHeight = view.getHeight();
-
-        ValueAnimator mAnimator = slideAnimator(view,finalHeight, 0);
-        mAnimator.setDuration(0);
-
-        final View thisview=view;
-        mAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                //Height=0, but it set visibility to GONE
-                thisview.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationStart(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-            }
-        });
-        mAnimator.start();
-    }
-
-    private ValueAnimator slideAnimator(View view, int start, int end) {
-
-        ValueAnimator animator = ValueAnimator.ofInt(start, end);
-
-        final View thisview=view;
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                //Update Height
-                int value = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = thisview.getLayoutParams();
-                layoutParams.height = value;
-                thisview.setLayoutParams(layoutParams);
-            }
-        });
-        return animator;
-    }*/
 
     @Override
     public void onDetach() {
@@ -163,4 +75,24 @@ public class MyFrag  extends Fragment{
         }
     }
 
+
+    @Override
+    public void onClick(View v) {
+       Intent intent = null;
+        switch (v.getId()){
+            case R.id.myHead:
+                break;
+            case R.id.login:
+                intent = new Intent(getActivity(), LoginActivity.class);
+                break;
+            case R.id.register:
+                intent = new Intent(getActivity(), RegisterActivity.class);
+                break;
+
+            default:
+                break;
+        }
+        if(null!=intent)
+            startActivity(intent);
+    }
 }

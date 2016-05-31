@@ -3,11 +3,9 @@ package krelve.view;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -32,7 +30,7 @@ public class Kanner extends FrameLayout {
     private ImageLoader mImageLoader;
     private List<ImageView> imageViews;
     private Context context;
-    private ViewPager vp;
+    private ClickableViewPager vp;
     private boolean isAutoPlay;
     private int currentItem;
     private int delayTime;
@@ -89,15 +87,14 @@ public class Kanner extends FrameLayout {
         imageViews.clear();
         View view = LayoutInflater.from(context).inflate(
                 R.layout.kanner_layout, this, true);
-        vp = (ViewPager) view.findViewById(R.id.vp);
+        vp = (ClickableViewPager) view.findViewById(R.id.vp);
         ll_dot = (LinearLayout) view.findViewById(R.id.ll_dot);
         ll_dot.removeAllViews();
-        vp.setOnTouchListener(new OnTouchListener() {
+        vp.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int item = currentItem;
-                clickListener.onItemClick(item);
-                return false;
+            public void onItemClick(int position) {
+                //int item = currentItem;
+                clickListener.onItemClick(position);
             }
         });
     }

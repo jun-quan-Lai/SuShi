@@ -1,13 +1,14 @@
 package com.ljq.sushi.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.ljq.sushi.Activity.TestActivity;
 import com.ljq.sushi.R;
 
 import java.lang.reflect.Field;
@@ -50,7 +51,9 @@ public class LiveFragment extends Fragment {
         adsView.setAdsViewClickListenr(new Kanner.AdsViewClickListener() {
             @Override
             public void onItemClick(int item) {
-                Toast.makeText(getActivity(),"you click"+item, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TestActivity.class);
+                startActivity(intent);
+
             }
         });
 

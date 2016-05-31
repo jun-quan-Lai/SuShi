@@ -8,8 +8,15 @@ import android.os.Message;
 
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
+import com.ljq.sushi.MyApplication;
 import com.ljq.sushi.R;
+import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 import com.ljq.sushi.Util.SharedPreferenceUtils;
+import com.ljq.sushi.Util.UserUtil;
+import com.ljq.sushi.entity.UserAccountInfo;
+import com.ljq.sushi.entity.UserBaseInfo;
+
+import java.util.Date;
 
 /**
  * Created by jc on 2015/11/20.
@@ -17,13 +24,13 @@ import com.ljq.sushi.Util.SharedPreferenceUtils;
  * 与选择是否显示导航动画
  */
 public class WelcomeActivity extends Activity {
+    private UserBaseInfo userBaseInfo;
 
     private Handler handler;
     private Message msg;
     boolean firstFlag; //是否首次安装flag
     private String userName;
     private String passWord;  //当用户选择了自动登录，用于填充账号密码
-    private int Resultcode;
     final Intent intent = new Intent();
 
     @Override
@@ -36,40 +43,49 @@ public class WelcomeActivity extends Activity {
 
     //判断且实现应跳转导航动画还是主界面
     private void shipToNavigationOrFrame(){
+         final MyApplication application = (MyApplication) getApplication();
         firstFlag = SharedPreferenceUtils.getBoolean(this,AppConstants.FIRST_OPEN, true);
         if (firstFlag){
             intent.setClass(this,NavigationActivity.class);
             SharedPreferenceUtils.putBoolean(this, AppConstants.FIRST_OPEN, false);
-        }else {//判断用户是否选择自动登录
-            /*if(SharedPreferenceUtils.getBoolean(this, "autoLogin", false)) {
-                userName = SharedPreferenceUtils.getString(this, "username", " ");
-                passWord = SharedPreferenceUtils.getString(this, "password", " ");
-                final HashMap<String, String> params = new HashMap();
-                params.put("userName", userName);
-                params.put("userPwd", passWord);
-                final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
-                new Thread() {
-                    public void run() {
-                        try {
-                            Resultcode = userservice.userLogin(params);
-                            //Log.d("code","code"+ Resultcode);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        }else {//用户不是第一次安装
+            UserAccountInfo user = UserUtil.getLastLoginUser(getApplicationContext());//获取上一次登录的用户
+            if(user!=null){//用户不是第一次登录
+
+                {
+                    final String userName=user.getUserName();
+                    final String userPwd=user.getUserPwd();
+
+                    final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
+
+                    Thread t =new Thread() {
+                        public void run() {
+                            try {
+                                userBaseInfo = userservice.userLogin(userName,userPwd);
+                                application.setUserBaseInfo(userBaseInfo);//添加用户信息到全局
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                        if (Resultcode ==AppConstants.OK_LOGIN) {
-                            intent.setClass(WelcomeActivity.this, MainActivity.class);
-                        } else {
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 2;
-                            handler.sendMessage(msg);
-                            intent.setClass(WelcomeActivity.this, LoginActivity.class);
-                        }
+                    };
+                    t.start(); //开启线程，执行登录操作
+                    try {
+                        t.join();//挂起线程，等待执行结果
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                }.start();
+
+                    int returncode= userservice.getLoginReturncode();
+                    //判断登录结果
+                    if (returncode ==AppConstants.OK_LOGIN) {
+                        UserUtil.saveUser(getApplicationContext(),user.getUserName(),user.getUserPwd(),new Date().getTime());
+
+
+                    } else {
+
+                    }
+                }
             }
-            else {
-                intent.setClass(this, LoginActivity.class);
-            }*/
             intent.setClass(this, MainActivity.class);
         }
 

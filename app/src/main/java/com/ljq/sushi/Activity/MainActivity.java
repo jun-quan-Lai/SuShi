@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -61,12 +62,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         bottomNavigationBar = (BottomNavigationBar)findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.bottom_baike,"百科"))
-                .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素食地图"))
+                .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素馆"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_live,"素食生活"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_me,"我"))
-                .setActiveColor("#FFFFFF")
-                .setInActiveColor("#ECECEC")
-                .setBarBackgroundColor(R.color.green)
+                .setActiveColor(R.color.green)//背景色
+                .setInActiveColor("#B2EBC8")//未选中色
+                .setBarBackgroundColor(R.color.white)//选中色
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);
 
@@ -176,4 +177,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onTabReselected(int position) {
 
     }
+
+
 }

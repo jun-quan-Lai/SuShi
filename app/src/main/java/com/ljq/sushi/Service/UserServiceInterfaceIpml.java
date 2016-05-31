@@ -1,8 +1,12 @@
 package com.ljq.sushi.Service;
 
+import android.util.Log;
+
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.HttpUtil.NativeHttpUtil;
+import com.ljq.sushi.entity.UserBaseInfo;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -12,21 +16,63 @@ import java.util.HashMap;
  */
 public class UserServiceInterfaceIpml implements UserServiceInterface {
 
-    @Override
-    public int userLogin(HashMap<String,String> params) throws Exception {
 
-        String jsonString = NativeHttpUtil.post(AppConstants.URL_LOGIN, params);
-        //Log.d("jsonString",jsonString);
-        JSONObject jo = new JSONObject(jsonString);
-        int  code = jo.getInt("code");
-        return code;
+
+    private int loginReturncode;
+
+    public int getLoginReturncode() {
+        return loginReturncode;
     }
 
     @Override
-    public int userRegist(HashMap<String, String> params) throws Exception {
+    public UserBaseInfo userLogin(String userName,String userPwd) throws Exception {
+
+        final HashMap<String, String> params = new HashMap();
+        params.put("userName", userName);
+        params.put("userPwd", userPwd);
+        String jsonString= NativeHttpUtil.post(AppConstants.URL_LOGIN, params);
+        Log.d("登录成功后返回的东西！！！！！",jsonString);
+        UserBaseInfo userBaseInfo = getUserBaseInfo(jsonString);
+        return userBaseInfo;
+    }
+
+    @Override
+    public int userRegist(String userName,String userPwd) throws Exception {
+        int code=0;
+
+        final HashMap<String, String> params = new HashMap();
+        params.put("userName", userName);
+        params.put("userPwd", userPwd);
         String jsonString = NativeHttpUtil.post(AppConstants.URL_REGIST, params);
         JSONObject jo = new JSONObject(jsonString);
-        int  code = jo.getInt("code");
+        code = jo.getInt("code");
         return code;
     }
+
+    private UserBaseInfo getUserBaseInfo(String jsonString){
+
+        try {
+            JSONObject jo = new JSONObject(jsonString);
+            loginReturncode = jo.getInt("code");
+            if(loginReturncode==AppConstants.OK_LOGIN){
+                UserBaseInfo userBaseInfo = new UserBaseInfo();
+                JSONObject data = new JSONObject(jo.getString("data"));
+                userBaseInfo.setId(data.getInt("id"));
+                userBaseInfo.setName(data.getString("name"));
+                userBaseInfo.setEmail(data.getString("email"));
+                userBaseInfo.setPhoneNo(data.getString("phoneNo"));
+                userBaseInfo.setSex(data.getString("sex"));
+                userBaseInfo.setHeadImgUrl(data.getString("headImg"));
+                userBaseInfo.setIntroduction(data.getString("introduction"));
+                userBaseInfo.setMotto(data.getString("motto"));
+                return userBaseInfo;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 }

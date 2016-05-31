@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.ljq.sushi.Adapter.RestaurantFragAdapter;
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
+import com.ljq.sushi.UI.DividerItemDecoration;
 import com.ljq.sushi.citylist.LetterSortActivity;
 import com.ljq.sushi.entity.Restaurant;
 import com.squareup.okhttp.Call;
@@ -153,6 +154,8 @@ public class RestaurantFrag extends Fragment {
         noDataView = (RelativeLayout) getView().findViewById(R.id.noDataView);
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.restaurant_recyler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
+
         changeCity = (Button) getView().findViewById(R.id.changCity);
         changeCity.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,11 +1,11 @@
 package com.ljq.sushi.Service;
 
-import java.util.HashMap;
+import com.ljq.sushi.entity.UserBaseInfo;
 
 /**
  * 登录注册功能接口
  */
 public interface UserServiceInterface {
-     int userLogin(HashMap<String,String> params)throws Exception;
-     int userRegist(HashMap<String,String> params)throws Exception;
+     UserBaseInfo userLogin(String userName, String userPwd)throws Exception;
+     int userRegist(String userName,String userPwd)throws Exception;
 }

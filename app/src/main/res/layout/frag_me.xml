@@ -5,37 +5,128 @@
                   android:layout_height="fill_parent"
         >
 
-        <RelativeLayout
+
+
+
+
+        <LinearLayout
+            android:id="@+id/me_nlogin_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="@color/green"
+            android:visibility="visible">
+
+
+
+            <ImageView
+                android:id="@+id/img_my_nlogin_Head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:src="@mipmap/me_show_nlogin128dp"/>
+            <TextView
+                android:id="@+id/nlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/img_my_nlogin_Head"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="未登录"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:textColor="@color/white"
+                    android:text="登录"/>
+                <Button
+                    android:id="@+id/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:textColor="@color/white"
+                    android:text="注册"/>
+            </LinearLayout>
+
+            </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/me_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:background="@color/green">
+            android:orientation="vertical"
+            android:background="@color/green"
+            android:visibility="gone">
 
             <ImageView
-                android:id="@+id/myImage"
+                android:id="@+id/myHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 android:src="@mipmap/user_128dp"/>
             <TextView
                 android:id="@+id/myName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/myImage"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignBottom="@+id/myHead"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:text="我的昵称"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="5dp"
+
+                android:orientation="horizontal">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_face_white_18dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关注"/>
+                <TextView
+                    android:id="@+id/followCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"/>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/fans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/myName"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_alignLeft="@+id/myName"
-                android:layout_toRightOf="@+id/myImage"
+
                 android:orientation="horizontal">
 
                 <ImageView
@@ -58,7 +149,7 @@
 
             <LinearLayout
                 android:id="@+id/message"
-                android:layout_toRightOf="@+id/fans"
+
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/myName"
@@ -81,12 +172,12 @@
                     android:text="0"/>
 
             </LinearLayout>
-
-        </RelativeLayout>
+         </LinearLayout>
+    </LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="wrap_content" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,12 +193,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:src="@mipmap/friend_64dp"/>
+                    android:src="@mipmap/articlecollection_64dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的素友"
+                    android:text="文章收藏"
                     android:textSize="20dp"
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
@@ -223,7 +314,21 @@
                 android:layout_above="@+id/main_radioGroup"
                 android:background="#B2B2B2" />
 
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="退出登录"
+                android:background="@android:color/darker_gray"
+                android:clickable="false"
+                />
+
         </LinearLayout>
+
+
     </ScrollView>
+
+
 </LinearLayout>
 

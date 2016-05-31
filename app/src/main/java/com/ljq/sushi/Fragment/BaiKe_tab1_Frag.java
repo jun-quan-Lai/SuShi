@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.ljq.sushi.Adapter.BaikeTab1Adapter;
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
+import com.ljq.sushi.UI.DividerItemDecoration;
 import com.ljq.sushi.entity.Article;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Call;
@@ -102,6 +103,7 @@ public class BaiKe_tab1_Frag extends Fragment {
     private void initView() {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.baike_tab1_recyler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
 
     }
 

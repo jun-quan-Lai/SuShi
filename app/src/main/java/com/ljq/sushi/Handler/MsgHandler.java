@@ -34,6 +34,10 @@ public class MsgHandler extends Handler {
             case 5:
                 showInfo("注册失败，服务器错误");
                 break;
+            case 6:
+                showInfo("哎呀！没有网络");
+            case 7:
+                showInfo("服务器开了个小差");
             default:
                 break;
         }

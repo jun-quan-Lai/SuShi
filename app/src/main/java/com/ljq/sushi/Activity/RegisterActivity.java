@@ -13,8 +13,9 @@ import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
+import com.ljq.sushi.Util.UserUtil;
 
-import java.util.HashMap;
+import java.util.Date;
 
 
 public class RegisterActivity extends ActionBarActivity implements View.OnClickListener{
@@ -37,8 +38,8 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
 
         handler = new MsgHandler(this);
 
-        getSupportActionBar().setTitle("注册");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("注册");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         phoneNumberWrapper = (TextInputLayout) findViewById(R.id.phoneNumberWrapper);
         passwordWrapper = (TextInputLayout) findViewById(R.id.regist_passwordWrapper);
@@ -52,11 +53,17 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
             case R.id.btn_summit:
                 phoneNumber = phoneNumberWrapper.getEditText().getText().toString().trim();
                 password = passwordWrapper.getEditText().getText().toString().trim();
-                regist(phoneNumber,password);
+                if(regist(phoneNumber,password)){
+                    UserUtil.saveUser(getApplicationContext(),phoneNumber,password,new Date().getTime());
+                }
+                this.finish();
+                break;
+            default:
+                break;
         }
     }
 
-    private void regist(String phoneNumber,String password){
+    private boolean regist(final String phoneNumber, final String password){
         if (phoneNumber.equals(" ")){
             phoneNumberWrapper.setError("手机号不能为空");
             passwordWrapper.setError(null);
@@ -77,34 +84,40 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
             phoneNumberWrapper.setEnabled(false);
             passwordWrapper.setEnabled(false);
 
-            final HashMap<String, String> params = new HashMap();
-            params.put("userName", phoneNumber);
-            params.put("userPwd", password);
+
             final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
-            new Thread() {
+           Thread t = new Thread() {
                 public void run() {
                     try{
-                        httpResultcode = userservice.userRegist(params);
-                        if (httpResultcode== AppConstants.OK_REGISTER) {
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 3;
-                            handler.sendMessage(msg);
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        } else if(httpResultcode==AppConstants.ERROR_NAME_EXIST) {
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 4;
-                            handler.sendMessage(msg);
-                        }else if(httpResultcode==AppConstants.ERROR_SERVICE){
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 5;
-                            handler.sendMessage(msg);
-                        }
+                        httpResultcode = userservice.userRegist(phoneNumber,password);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
-            }.start();
+            };
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (httpResultcode== AppConstants.OK_REGISTER) {
+                msg = handler.obtainMessage();
+                msg.arg1 = 3;
+                handler.sendMessage(msg);
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            } else if(httpResultcode==AppConstants.ERROR_NAME_EXIST) {
+                msg = handler.obtainMessage();
+                msg.arg1 = 4;
+                handler.sendMessage(msg);
+            }else if(httpResultcode==AppConstants.ERROR_SERVICE){
+                msg = handler.obtainMessage();
+                msg.arg1 = 5;
+                handler.sendMessage(msg);
+            }
         }
+        return false;
     }
 }

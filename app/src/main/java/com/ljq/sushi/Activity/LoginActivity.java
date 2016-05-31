@@ -3,37 +3,35 @@ package com.ljq.sushi.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.Handler.MsgHandler;
+import com.ljq.sushi.MyApplication;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
-import com.ljq.sushi.Util.SharedPreferenceUtils;
+import com.ljq.sushi.Util.UserUtil;
+import com.ljq.sushi.entity.UserBaseInfo;
 
-import java.util.HashMap;
+import java.util.Date;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
     private Handler handler;
     private Message msg;
     private String username;
     private String password;
-    private  int httpResultcode;
+    private UserBaseInfo userBaseInfo;
 
     private TextInputLayout usernameWrapper = null;
     private TextInputLayout passwordWrapper = null;
     private Button loginBtn = null;
     private Button registBtn = null;
-    private CheckBox rememberPswChBx = null;
-    private CheckBox autoLoginChBx = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,45 +44,12 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
         loginBtn = (Button) findViewById(R.id.btn_login);
         registBtn = (Button) findViewById(R.id.btn_regist);
-        rememberPswChBx = (CheckBox) findViewById(R.id.rememberPswChBx);
-        rememberPswChBx.setChecked(false);
-        autoLoginChBx = (CheckBox) findViewById(R.id.autoLoginChBx);
-        autoLoginChBx.setChecked(false);
-        rememberPswChBx.setOnCheckedChangeListener(checkboxlister);
-        autoLoginChBx.setOnCheckedChangeListener(checkboxlister);
 
         loginBtn.setOnClickListener(this);
         registBtn.setOnClickListener(this);
-
-        SharedPreferences share = getSharedPreferences("flag", MODE_PRIVATE);
-        if (share.getBoolean("rememberPsw", false)) {
-            usernameWrapper.getEditText().setText(share.getString("username", " "));
-            passwordWrapper.getEditText().setText(share.getString("password", " "));
-            rememberPswChBx.setChecked(true);
-        }
-        else{
-            usernameWrapper.setHint("请输入帐号");
-            passwordWrapper.setHint("请输入密码");
-        }
     }
 
-    private CheckBox.OnCheckedChangeListener checkboxlister = new CheckBox.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (rememberPswChBx.isChecked()) {
-                SharedPreferenceUtils.putString(getApplicationContext(), "username", usernameWrapper.getEditText().getText().toString().trim());
-                SharedPreferenceUtils.putString(getApplicationContext(), "password", passwordWrapper.getEditText().getText().toString().trim());
-                SharedPreferenceUtils.putBoolean(getApplicationContext(), "rememberPsw",true);
-            }
-            if(autoLoginChBx.isChecked()){
-                SharedPreferenceUtils.putBoolean(getApplicationContext(), "autoLogin", true);
-            }
-            else{
-                SharedPreferenceUtils.putBoolean(getApplicationContext(), "autoLogin", false);
-            }
 
-        }
-    };
 
     @Override
     public void onClick(View v) {
@@ -92,11 +57,16 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             case R.id.btn_login:
                 username = usernameWrapper.getEditText().getText().toString().trim();
                 password = passwordWrapper.getEditText().getText().toString().trim();
-                doLogin(username,password);
+                if(doLogin(username,password)){
+                    //把帐号信息保存到SharedPreference
+                    UserUtil.saveUser(getApplicationContext(),username,password, new Date().getTime());
+                }
+                this.finish();
                 break;
             case R.id.btn_regist:
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                this.finish();
                 break;
             default:
                 break;
@@ -108,7 +78,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
      * @param userName
      * @param passWord
      */
-    public void doLogin(String userName, String passWord) {
+    public boolean doLogin(final String userName, final String passWord) {
+
+        final MyApplication application = (MyApplication) getApplication();
         if (username.equals(" ")){
             usernameWrapper.setError("账号不能为空");
             passwordWrapper.setError(null);
@@ -121,31 +93,38 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             usernameWrapper.setErrorEnabled(false);
             passwordWrapper.setErrorEnabled(false);
 
-            final HashMap<String, String> params = new HashMap();
-            params.put("userName", userName);
-            params.put("userPwd", passWord);
             final UserServiceInterfaceIpml userservice = new UserServiceInterfaceIpml();
-            new Thread() {
+            Thread t = new Thread() {
                 public void run() {
                     try{
-                        httpResultcode = userservice.userLogin(params);
-                        //Log.d("code","code"+httpResultcode);
-                        if (httpResultcode== AppConstants.OK_LOGIN) {
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 1;
-                            handler.sendMessage(msg);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else if(httpResultcode==AppConstants.ERROR_NAME_OR_PW){
-                            msg = handler.obtainMessage();
-                            msg.arg1 = 2;
-                            handler.sendMessage(msg);
-                        }
+                        userBaseInfo = userservice.userLogin(userName,passWord);
+                       application.setUserBaseInfo(userBaseInfo); //把用户信息添加到全局
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
-            }.start();
+            };
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int returncode = userservice.getLoginReturncode();
+            if (returncode== AppConstants.OK_LOGIN) {
+                msg = handler.obtainMessage();
+                msg.arg1 = 1;
+                handler.sendMessage(msg);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            } else if(returncode==AppConstants.ERROR_NAME_OR_PW){
+                msg = handler.obtainMessage();
+                msg.arg1 = 2;
+                handler.sendMessage(msg);
+            }
         }
+        return false;
     }
+
 }

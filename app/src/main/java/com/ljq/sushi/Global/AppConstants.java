@@ -4,10 +4,10 @@ package com.ljq.sushi.Global;
  * Created by Administrator on 2016/5/1.
  */
 public class AppConstants {
-    public static final String FIRST_OPEN = "first_open";
+    public static final String FIRST_OPEN = "first_open";//应用第一次安装标记，存进SharedPreferences用
 
-    public static final String URL_LOGIN = "http://114.215.99.203/app/Home/Me/login";
-    public static final String URL_REGIST="http://114.215.99.203/app/Home/Me/regist";
+    public static final String URL_LOGIN = "http://114.215.99.203/app/Home/User/login";
+    public static final String URL_REGIST="http://114.215.99.203/app/Home/User/regist";
 
     /*
     get方式传type参数，不传type参数会返回所有文章

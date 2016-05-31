@@ -6,11 +6,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
+        android:anyDensity="true"
         android:largeScreens="true"
+        android:normalScreens="true"
         android:resizeable="true"
-        android:anyDensity="true" />
+        android:smallScreens="true"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -36,10 +37,15 @@
         </activity>
         <activity android:name=".Activity.NavigationActivity">
         </activity>
-        <activity android:name=".Activity.MainActivity"
+        <activity
+            android:name=".Activity.MainActivity"
             android:theme="@style/ColorTranslucentTheme">
         </activity>
         <activity android:name=".Activity.ContentActivity">
+        </activity>
+        <activity android:name=".Activity.TestActivity">
+        </activity>
+        <activity android:name=".Activity.MedetailsActivity">
         </activity>
     </application>
 

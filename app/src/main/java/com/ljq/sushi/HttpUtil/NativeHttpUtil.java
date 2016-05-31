@@ -1,5 +1,7 @@
 package com.ljq.sushi.HttpUtil;
 
+import android.util.Log;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -96,6 +98,7 @@ public class NativeHttpUtil {
 	 */
 	public static String post(String url, Map<String, String> params) {
 		if (params == null || params.size() == 0) {
+			Log.d("参数为空了？？？？？？","参数空！！！！！！！！！！！！！");
 			return null;
 		}
 		OutputStream os = null;
@@ -120,6 +123,9 @@ public class NativeHttpUtil {
 			if (conn.getResponseCode() == 200) {
 				is = conn.getInputStream();
 				return StreamUtil.readStreamToString(is, ENCODING);
+			}
+			else{
+				Log.d("服务器出问题？？？？？？","服务器错误!!!!!!!!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
