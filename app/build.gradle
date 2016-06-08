@@ -29,6 +29,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.0.0'
     compile project(path: ':kanner')
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 }
 
 

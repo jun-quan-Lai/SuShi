@@ -24,8 +24,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        userBaseInfo = new UserBaseInfo();
         setUserBaseInfo(null);
 
         //创建默认的ImageLoader配置参数

@@ -4,7 +4,7 @@
     <color name="white">#FFFFFF</color>
     <color name="gray">@android:color/darker_gray</color>
     <color name="bg1">#EBF9F4</color>
-    <color name="actionbar">#38CC90</color>
+    <color name="actionbar">#40AD81</color>
     <color name="statusbar">#38CC90</color>
     <color name="window">#FFFFFF</color>
     <color name="tabhost">#4ECFA0</color>

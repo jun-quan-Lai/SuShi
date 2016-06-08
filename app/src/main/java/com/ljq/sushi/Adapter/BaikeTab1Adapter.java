@@ -47,6 +47,7 @@ public class BaikeTab1Adapter extends RecyclerView.Adapter {
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
+                .delayBeforeLoading(0)
                 .displayer(new SimpleBitmapDisplayer())
                 .build();
     }

@@ -29,8 +29,7 @@ public class WelcomeActivity extends Activity {
     private Handler handler;
     private Message msg;
     boolean firstFlag; //是否首次安装flag
-    private String userName;
-    private String passWord;  //当用户选择了自动登录，用于填充账号密码
+
     final Intent intent = new Intent();
 
     @Override
