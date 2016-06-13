@@ -10,10 +10,9 @@
 
 
 
-
-
-    <style name="ColorTranslucentTheme" parent="AppTheme">
-
+    <style name="ColorTranslucentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>
