@@ -3,10 +3,8 @@
                   android:orientation="vertical"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
+                  android:background="@color/white"
         >
-
-
-
 
 
         <LinearLayout
@@ -15,7 +13,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical"
-            android:background="@color/green"
+            android:background="@color/color_primary"
             android:visibility="visible">
 
 
@@ -68,18 +66,16 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical"
-            android:background="@color/green"
+            android:background="@color/color_primary"
             android:visibility="gone"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+
                 android:id="@+id/myHead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@mipmap/me_show_nlogin128dp"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#FF000000"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"/>
             <TextView
@@ -204,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="文章收藏"
-                    android:textSize="20dp"
+
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
 
@@ -230,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="素友动态"
-                    android:textSize="20dp"
+
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
 
@@ -256,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我的素圈"
-                    android:textSize="20dp"
+
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
 
@@ -282,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="店铺收藏"
-                    android:textSize="20dp"
+
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
 
@@ -309,7 +305,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="设置"
-                    android:textSize="20dp"
+
                     android:layout_margin="@dimen/activity_vertical_margin"/>
             </LinearLayout>
 
@@ -321,11 +317,11 @@
 
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_gravity="center"
                 android:text="退出登录"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/holo_red_light"
                 android:clickable="false"
                 />
 

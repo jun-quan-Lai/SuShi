@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -41,16 +40,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      /*  //对Android4.4做状态栏和Toolbar的沉浸（只支持4.4以上）
-        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
-            WindowManager.LayoutParams winParams = getWindow().getAttributes();
-            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-            winParams.flags |= bits;
-            getWindow().setAttributes(winParams);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.statusbar);
-        }*/
 
         mFrgmanager = getSupportFragmentManager();
         initView();
@@ -65,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_restaurant,"素馆"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_live,"素食生活"))
                 .addItem(new BottomNavigationItem(R.mipmap.bottom_me,"我"))
-                .setActiveColor(R.color.green)//背景色
+                .setActiveColor(R.color.color_primary)//背景色
                 .setInActiveColor("#B2EBC8")//未选中色
                 .setBarBackgroundColor(R.color.white)//选中色
                 .initialise();

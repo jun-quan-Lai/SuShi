@@ -12,7 +12,7 @@ public class UserBaseInfo {
     private String phoneNo;
     private String sex;
     private Date registTime;
-    private String headImgUrl;
+    private String headImg;
     private String introduction;
     private String motto;
 
@@ -64,12 +64,12 @@ public class UserBaseInfo {
         this.registTime = registTime;
     }
 
-    public String getHeadImgUrl() {
-        return headImgUrl;
+    public String getHeadImg() {
+        return headImg;
     }
 
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl;
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
     }
 
     public String getIntroduction() {

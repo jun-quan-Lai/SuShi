@@ -13,17 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ljq.sushi.Activity.LoginActivity;
 import com.ljq.sushi.Activity.MedetailsActivity;
 import com.ljq.sushi.Activity.RegisterActivity;
-import com.ljq.sushi.Listener.AnimateFirstDisplayListener;
 import com.ljq.sushi.MyApplication;
 import com.ljq.sushi.R;
 import com.ljq.sushi.entity.UserBaseInfo;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.lang.reflect.Field;
 
@@ -110,23 +106,8 @@ public class MyFrag  extends Fragment implements View.OnClickListener{
             loginTop.setVisibility(View.VISIBLE);
             if(userBaseInfo.getName()!=null)
                 myName.setText(userBaseInfo.getName().toString());
-            if(userBaseInfo.getHeadImgUrl()!=null){
-                ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-                DisplayImageOptions options;
-
-                options = new DisplayImageOptions.Builder()
-                        .showImageOnLoading(R.mipmap.ic_stub)
-                        .showImageForEmptyUri(R.mipmap.ic_empty)
-                        .showImageOnFail(R.mipmap.ic_error)
-                        .cacheInMemory(true)
-                        .cacheOnDisk(true)
-                        .considerExifParams(true)
-                        .delayBeforeLoading(0)
-                        .displayer(new SimpleBitmapDisplayer())
-                        .build();
-
-                ImageLoader.getInstance().displayImage(userBaseInfo.getHeadImgUrl(),headImg,options,animateFirstListener);
-
+            if(!userBaseInfo.getHeadImg().equals("null")){
+                Glide.with(MyFrag.this).load(userBaseInfo.getHeadImg()).into(headImg);
             }
         }
     }

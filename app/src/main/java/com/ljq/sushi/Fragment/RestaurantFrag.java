@@ -22,11 +22,6 @@ import com.ljq.sushi.R;
 import com.ljq.sushi.UI.DividerItemDecoration;
 import com.ljq.sushi.citylist.LetterSortActivity;
 import com.ljq.sushi.entity.Restaurant;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +31,12 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2015/11/8.
@@ -166,53 +167,54 @@ public class RestaurantFrag extends Fragment {
         });
     }
 
-    private void initData(String city) {
+    private void initData(final String city) {
         list = new ArrayList<>();
-        OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
-                .url(AppConstants.URL_RESTAURANT+city)
-                .build();
-        Call call = client.newCall(request);
+                    OkHttpClient client = new OkHttpClient();
 
-        call.enqueue(new Callback() {
+                    Request request = new Request.Builder()
+                            .url(AppConstants.URL_RESTAURANT+city)
+                            .build();
+                    Call call = client.newCall(request);
 
-            @Override
-            public void onResponse(Response response) throws IOException {
-                try {
-                    JSONObject jo1 = new JSONObject(response.body().string());
-                    int code = jo1.getInt("code");
-                    Log.d("code","mycode"+code);
-                    if(code==AppConstants.WITHOUT_RESTAURANT){
-                        //mRecyclerView.setVisibility(View.GONE);
-                        //noDataView.setVisibility(View.VISIBLE);
-                        mHandler.obtainMessage(1).sendToTarget();//通过Handler更新界面
-                    }
-                    else{
-                        JSONArray ja = new JSONArray(jo1.getString("data"));
-                        Restaurant restaurant;
-                        for (int i = 0; i < ja.length(); i++) {
-                            JSONObject data = ja.getJSONObject(i);
-                            String imageUrl = data.getString("imgurl");
-                            String name = data.getString("name");
-                            String addr = data.getString("address");
-                            restaurant = new Restaurant(imageUrl, name, addr);
-                            list.add(restaurant);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
                         }
 
-                        mHandler.obtainMessage(0).sendToTarget();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                JSONObject jo1 = new JSONObject(response.body().string());
+                                int code = jo1.getInt("code");
+                                Log.d("code","mycode"+code);
+                                if(code==AppConstants.WITHOUT_RESTAURANT){
+                                    //mRecyclerView.setVisibility(View.GONE);
+                                    //noDataView.setVisibility(View.VISIBLE);
+                                    mHandler.obtainMessage(1).sendToTarget();//通过Handler更新界面
+                                }
+                                else{
+                                    JSONArray ja = new JSONArray(jo1.getString("data"));
+                                    Restaurant restaurant;
+                                    for (int i = 0; i < ja.length(); i++) {
+                                        JSONObject data = ja.getJSONObject(i);
+                                        String imageUrl = data.getString("imgurl");
+                                        String name = data.getString("name");
+                                        String addr = data.getString("address");
+                                        restaurant = new Restaurant(imageUrl, name, addr);
+                                        list.add(restaurant);
+                                    }
 
-            }
+                                    mHandler.obtainMessage(0).sendToTarget();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-            @Override
-            public void onFailure(Request arg0, IOException arg1) {
+                    });
 
-            }
-        });
     }
 
     @Override

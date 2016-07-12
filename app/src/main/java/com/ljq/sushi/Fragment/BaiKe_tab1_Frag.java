@@ -17,12 +17,6 @@ import com.ljq.sushi.Global.AppConstants;
 import com.ljq.sushi.R;
 import com.ljq.sushi.UI.DividerItemDecoration;
 import com.ljq.sushi.entity.Article;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Cache;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class BaiKe_tab1_Frag extends Fragment {
@@ -95,6 +96,7 @@ public class BaiKe_tab1_Frag extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+
         initData();
 
     }
@@ -111,15 +113,13 @@ public class BaiKe_tab1_Frag extends Fragment {
         list = new ArrayList<Article>();
 
       final File baseDir = getActivity().getCacheDir();
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if(baseDir!=null){
             final File cacheDir = new File(baseDir,"HttpResponseCache");
-            try {
-                client.setCache(new Cache(cacheDir,HTTP_RESPONSE_DISK_CACHE_MAX_SIZE));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            builder.cache(new Cache(cacheDir,HTTP_RESPONSE_DISK_CACHE_MAX_SIZE));
         }
+        OkHttpClient client = builder.build();
+
         Request request = new Request.Builder()
                 .url(AppConstants.URL_ARTICLE)
                 .build();
@@ -127,7 +127,11 @@ public class BaiKe_tab1_Frag extends Fragment {
         call.enqueue(new Callback() {
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call,Response response) throws IOException {
                 try {
                     JSONObject jo1 = new JSONObject(response.body().string());
                     JSONArray ja = new JSONArray(jo1.getString("data"));
@@ -146,10 +150,6 @@ public class BaiKe_tab1_Frag extends Fragment {
                 mHandler.obtainMessage(0).sendToTarget();
             }
 
-            @Override
-            public void onFailure(Request arg0, IOException arg1) {
-
-            }
         });
     }
 }
