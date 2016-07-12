@@ -65,6 +65,8 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
         return code;
     }
 
+
+
     /**
      * 提交用户修改的个人信息
      * @param userBaseInfo
@@ -140,7 +142,7 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
      * @param jsonString
      * @return
      */
-    private UserBaseInfo getUserBaseInfo(String jsonString){
+    public UserBaseInfo getUserBaseInfo(String jsonString){
 
         try {
             JSONObject jo = new JSONObject(jsonString);
@@ -155,6 +157,7 @@ public class UserServiceInterfaceIpml implements UserServiceInterface {
                 userBaseInfo.setPhoneNo(data.getString("phoneno"));
                 userBaseInfo.setSex(data.getString("sex"));
                 userBaseInfo.setHeadImg(data.getString("headimg"));
+                userBaseInfo.setLastHeadImgTime(data.getString("lastheadimgtime"));
                 userBaseInfo.setIntroduction(data.getString("introduction"));
                 userBaseInfo.setMotto(data.getString("motto"));
                 return userBaseInfo;

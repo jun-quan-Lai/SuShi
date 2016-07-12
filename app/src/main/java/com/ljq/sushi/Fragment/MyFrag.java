@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.ljq.sushi.Activity.LoginActivity;
 import com.ljq.sushi.Activity.MedetailsActivity;
 import com.ljq.sushi.Activity.RegisterActivity;
@@ -59,7 +60,6 @@ public class MyFrag  extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.i("MyFrag","onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        initView();
 
     }
 
@@ -67,6 +67,7 @@ public class MyFrag  extends Fragment implements View.OnClickListener{
     public void onStart() {
         Log.i("MyFrag","onStart");
         super.onStart();
+        initView();
     }
 
     @Override
@@ -107,7 +108,7 @@ public class MyFrag  extends Fragment implements View.OnClickListener{
             if(userBaseInfo.getName()!=null)
                 myName.setText(userBaseInfo.getName().toString());
             if(!userBaseInfo.getHeadImg().equals("null")){
-                Glide.with(MyFrag.this).load(userBaseInfo.getHeadImg()).into(headImg);
+                Glide.with(MyFrag.this).load(userBaseInfo.getHeadImg()).signature(new StringSignature(userBaseInfo.getLastHeadImgTime())).into(headImg);
             }
         }
     }

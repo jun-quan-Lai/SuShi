@@ -14,12 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.ljq.sushi.MyApplication;
 import com.ljq.sushi.R;
 import com.ljq.sushi.Service.UserServiceInterfaceIpml;
 import com.ljq.sushi.Util.Validate;
 import com.ljq.sushi.entity.UserBaseInfo;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -116,8 +118,14 @@ public class MedetailsActivity extends AppCompatActivity implements View.OnClick
         }
 
         if(!userBaseInfo.getHeadImg().equals("null")){
-            Glide.with(this).load(userBaseInfo.getHeadImg()).into(head);
+
+            Glide.with(this).load(userBaseInfo.getHeadImg()).signature(new StringSignature(userBaseInfo.getLastHeadImgTime())).into(head);
         }
+    }
+
+    private void setApplication(UserBaseInfo userBaseInfo){
+        final MyApplication application = (MyApplication) getApplication();
+        application.setUserBaseInfo(userBaseInfo);
     }
 
     /**
@@ -287,6 +295,10 @@ public class MedetailsActivity extends AppCompatActivity implements View.OnClick
                     public void run() {
                         try{
                             userservice.uploadHeadImage(userBaseInfo.getId(), photoInfo.getPhotoPath());
+                            Long date = new Date().getTime();
+                            userBaseInfo.setLastHeadImgTime(date.toString());
+                            //setApplication(userBaseInfo);
+                            changeUserInfo(userBaseInfo);
                         }catch (Exception e){
                             e.printStackTrace();
                         }

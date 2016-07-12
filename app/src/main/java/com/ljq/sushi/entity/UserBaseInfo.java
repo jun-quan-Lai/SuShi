@@ -13,6 +13,8 @@ public class UserBaseInfo {
     private String sex;
     private Date registTime;
     private String headImg;
+
+    private String lastHeadImgTime;
     private String introduction;
     private String motto;
 
@@ -70,6 +72,13 @@ public class UserBaseInfo {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+    public String getLastHeadImgTime() {
+        return lastHeadImgTime;
+    }
+
+    public void setLastHeadImgTime(String lastHeadImgTime) {
+        this.lastHeadImgTime = lastHeadImgTime;
     }
 
     public String getIntroduction() {

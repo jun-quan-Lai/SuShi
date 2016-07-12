@@ -8,6 +8,7 @@ public class AppConstants {
 
     public static final String URL_LOGIN = "http://114.215.99.203/app/Home/User/login";
     public static final String URL_REGIST="http://114.215.99.203/app/Home/User/regist";
+    public static final String URL_GET_USERBASEINFO = "http://114.215.99.203/app/Home/User/returnUserInfo/";
     public static final String URL_CHANGE_USERINFO="http://114.215.99.203/app/Home/User/changeUserInfo";
     public static final String URL_CHANGE_USERHEADIMG = "http://114.215.99.203/app/Home/User/changeUserHeadImg";
 
